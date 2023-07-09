@@ -1,8 +1,11 @@
-function Products() {
+import React from "react";
 
+function Products({ products }) {
   return (
     <div className="grid-products">
-        produtos aki
+      {products.map((product) => (
+        <div key={product.id}>{product.name}</div>
+      ))}
     </div>
   );
 }

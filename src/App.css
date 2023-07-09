@@ -137,7 +137,9 @@ nav ul {
 }
 
 
-
+.products{
+  margin: 8rem 0 0 0;
+}
 
 /******responsive************/
 @media(min-width:1100px) {
