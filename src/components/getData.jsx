@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs, where, query } from 'firebase/firestore';
 import { db } from '../firebaseconfig';
 import Products from "./products";
 
 function GetData() {
   const [products, setProducts] = useState([]);
-  const [users, setUsers] = useState([]);
+  const [classifications, setClassifications] = useState([]);
+  const [selectedClassification, setSelectedClassification] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -14,10 +15,9 @@ function GetData() {
       const productsData = productsSnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
       setProducts(productsData);
 
-      // Fetch users data
-      const usersSnapshot = await getDocs(collection(db, "users"));
-      const usersData = usersSnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-      setUsers(usersData);
+      // Fetch unique classifications from products data
+      const uniqueClassifications = [...new Set(productsData.map((product) => product.classification))];
+      setClassifications(uniqueClassifications);
 
       console.log("UseEffect triggered in GetData component");
     };
@@ -25,9 +25,25 @@ function GetData() {
     fetchData();
   }, []);
 
+  const handleClassificationChange = (event) => {
+    setSelectedClassification(event.target.value);
+  };
+
+  const filteredProducts = selectedClassification
+    ? products.filter((product) => product.classification === selectedClassification)
+    : products;
+
   return (
     <div className="products">
-      <Products products={products} />
+      <select value={selectedClassification} onChange={handleClassificationChange}>
+        <option value="">All Classifications</option>
+        {classifications.map((classification, index) => (
+          <option key={index} value={classification}>
+            {classification}
+          </option>
+        ))}
+      </select>
+      <Products products={filteredProducts} />
     </div>
   );
 }

@@ -140,7 +140,17 @@ nav ul {
 .products{
   margin: 8rem 0 0 0;
 }
-
+.grid-products{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem;
+}
+.product-solo{
+  background: #fff;
+  border-radius: 1rem;
+  padding: 2rem;
+  color: #000
+}
 /******responsive************/
 @media(min-width:1100px) {
   .header{
