@@ -43,7 +43,7 @@ function GetData() {
           </option>
         ))}
       </select>
-      <Products products={filteredProducts} />
+      <Products filteredProducts={filteredProducts} />
     </div>
   );
 }

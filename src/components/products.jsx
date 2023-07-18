@@ -1,16 +1,15 @@
 import React from "react";
 
-function Products({ products }) {
+function Products({ filteredProducts }) {
   return (
     <div className="grid-products">
-        {products.map((product) => (
-          <div className="product-solo">
-              <div key={product.id}>{product.name}</div>
-              <div key={product.id}>{product.price}</div>
-          </div>
-        ))}
+      {filteredProducts.map((product) => (
+        <div className="product-solo" key={product.id}>
+          <div>{product.name}</div>
+          <div>{product.price}</div>
+        </div>
+      ))}
     </div>
   );
 }
-
 export default Products;
