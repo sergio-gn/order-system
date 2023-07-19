@@ -1,12 +1,14 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { collection, getDocs, where, query } from 'firebase/firestore';
 import { db } from '../firebaseconfig';
 import Products from "./products";
+import SearchBar from "./SearchBar";
 
 function GetData() {
   const [products, setProducts] = useState([]);
   const [classifications, setClassifications] = useState([]);
   const [selectedClassification, setSelectedClassification] = useState('');
+  const [searchedProducts, setSearchedProducts] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,14 +29,37 @@ function GetData() {
 
   const handleClassificationChange = (event) => {
     setSelectedClassification(event.target.value);
+    setSearchedProducts([]);
   };
 
+  const handleSearch = (searchTerm) => {
+    setSelectedClassification('');
+    if (searchTerm) {
+      const searchTermLower = searchTerm.toLowerCase();
+  
+      const filteredProducts = products.filter((product) => {
+        const nameMatch = product.name && product.name.toLowerCase().includes(searchTermLower);
+        const codigoMatch = product.codigo && product.codigo.toLowerCase().includes(searchTermLower);
+  
+        return nameMatch || codigoMatch;
+      });
+  
+      setSearchedProducts(filteredProducts);
+    } else {
+      setSearchedProducts([]);
+    }
+  };
+  
+  
   const filteredProducts = selectedClassification
     ? products.filter((product) => product.classification === selectedClassification)
-    : products;
+    : searchedProducts.length > 0
+      ? searchedProducts
+      : products;
 
   return (
     <div className="products">
+      <SearchBar handleSearch={handleSearch} />
       <select value={selectedClassification} onChange={handleClassificationChange}>
         <option value="">All Classifications</option>
         {classifications.map((classification, index) => (

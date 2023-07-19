@@ -5,6 +5,7 @@ function Products({ filteredProducts }) {
     <div className="grid-products">
       {filteredProducts.map((product) => (
         <div className="product-solo" key={product.id}>
+          <div>{product.codigo}</div>
           <div>{product.name}</div>
           <div>{product.price}</div>
         </div>
