@@ -12,8 +12,9 @@ function SearchBar({ handleSearch }) {
   return (
     <div>
       <input
+        className="searchBar"
         type="text"
-        placeholder="Search by product name or code..."
+        placeholder="Buscar em Produtos..."
         value={searchTerm}
         onChange={handleChange}
       />

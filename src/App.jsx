@@ -3,8 +3,7 @@ import {BrowserRouter as Router, Routes, Route, Link} from 'react-router-dom';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
 import Feed from './pages/Feed';
-import TambasaFacil from './assets/TambasaFacil.svg';
-import { TiUser, TiHome, TiHeart} from "react-icons/ti";
+import { TiUser, TiHome, TiShoppingCart} from "react-icons/ti";
 
 
 import {useState, useEffect} from "react";
@@ -12,7 +11,8 @@ import {provider, auth} from "./firebaseconfig";
 import {signInWithPopup, onAuthStateChanged} from "firebase/auth";
 
 import Logged from './components/logged';
-
+import Tambasa from "./assets/TambasaFacil.svg";
+import ProfilePic from './assets/profile.png';
 
 function App() {
   const [value,setValue] = useState('')
@@ -38,36 +38,33 @@ function App() {
     <>
       <Router className="navbar">
         <div className="header">
-          <Link to="/">
-            <div className="logo">
-              <img src={TambasaFacil} alt="Rank Votes" />
-            </div>
-          </Link>
-          <div className="login">
-            <Link to="/profile">
-              {value ? <Logged /> : <button onClick={handleClick}>Login</button>}
+          <nav className="nav-class container">
+            <Link className="linklogo" to="/">
+              <div className="logo">
+                <img src={Tambasa} alt="Logo Tambasa" />
+              </div>
             </Link>
-          </div>
+            <ul>
+              <li>
+                <Link to="/">
+                  <TiHome style={{ fontSize: "2.5rem" }}/>
+                </Link>
+              </li>
+              <li>
+                <Link to="/feed">
+                  <TiShoppingCart style={{ fontSize: "2.5rem" }}/>
+                </Link>
+              </li>
+              <li>
+                <Link to="/profile">
+                  {value ? <Logged /> : <button className="profile-button" onClick={handleClick}>
+                    <TiUser style={{ fontSize: "2.5rem" }}/>
+                  </button>}
+                </Link>
+              </li>
+            </ul>
+          </nav>
         </div>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">
-                <TiHome style={{ fontSize: "2.5rem" }}/>
-              </Link>
-            </li>
-            <li>
-              <Link to="/feed">
-                <TiHeart style={{ fontSize: "2.5rem" }}/>
-              </Link>
-            </li>
-            <li>
-              <Link to="/profile">
-                <TiUser style={{ fontSize: "2.5rem" }}/>
-              </Link>
-            </li>
-          </ul>
-        </nav>
         <Routes>
             <Route path="/profile" element={<Profile />} />
             <Route index path="/" element={<Home userId={uid}/>} />

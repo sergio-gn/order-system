@@ -3,6 +3,7 @@ import { collection, getDocs, where, query } from 'firebase/firestore';
 import { db } from '../firebaseconfig';
 import Products from "./products";
 import SearchBar from "./SearchBar";
+import { TiZoomIn} from "react-icons/ti";
 
 function GetData() {
   const [products, setProducts] = useState([]);
@@ -58,17 +59,35 @@ function GetData() {
       : products;
 
   return (
-    <div className="products">
-      <SearchBar handleSearch={handleSearch} />
-      <select value={selectedClassification} onChange={handleClassificationChange}>
-        <option value="">All Classifications</option>
-        {classifications.map((classification, index) => (
-          <option key={index} value={classification}>
-            {classification}
-          </option>
-        ))}
-      </select>
-      <Products filteredProducts={filteredProducts} />
+    <div className="container">
+      <div className="Select_and_Search_Bar">
+          <select className="selectBar" value={selectedClassification} onChange={handleClassificationChange}>
+            <option value="">All Classifications</option>
+            {classifications.map((classification, index) => (
+              <option key={index} value={classification}>
+                {classification}
+              </option>
+            ))}
+          </select>
+          <SearchBar handleSearch={handleSearch} >
+            <TiZoomIn/>
+          </SearchBar>
+      </div>
+      <div className="home_container">
+        <div className="parent-products">
+          <Products filteredProducts={filteredProducts} />
+        </div>
+        <div className="parent-categories">
+          <div className="categories">
+            <p className="small-title">Categorias</p>
+            {classifications.map((classification, index) => (
+                <p key={index} value={classification}>
+                  {classification}
+                </p>
+              ))}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

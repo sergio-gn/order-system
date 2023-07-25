@@ -74,11 +74,13 @@ function Profile() {
   };
 
   return (
-    <div>
-      <p>Name: {name}</p>
-      <p>Join Date: {joinDate}</p>
-      {isAdmin && <ProfileAdmin />}
-      <button onClick={logout}>Logout</button>
+    <div className="container">
+      <div className="profile-container">
+        <p>Name: {name}</p>
+        <p>Join Date: {joinDate}</p>
+        {isAdmin && <ProfileAdmin />}
+        <button onClick={logout}>Logout</button>
+      </div>
     </div>
   );
 }
