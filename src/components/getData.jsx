@@ -5,7 +5,7 @@ import Products from "./products";
 import SearchBar from "./SearchBar";
 import { TiZoomIn} from "react-icons/ti";
 
-function GetData() {
+function GetData({addToCart}) {
   const [products, setProducts] = useState([]);
   const [classifications, setClassifications] = useState([]);
   const [selectedClassification, setSelectedClassification] = useState('');
@@ -75,7 +75,7 @@ function GetData() {
       </div>
       <div className="home_container">
         <div className="parent-products">
-          <Products filteredProducts={filteredProducts} />
+          <Products addToCart={addToCart} filteredProducts={filteredProducts} />
         </div>
         <div className="parent-categories">
           <div className="categories">

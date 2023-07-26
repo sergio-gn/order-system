@@ -1,6 +1,6 @@
 import React from "react";
 
-function Products({ filteredProducts }) {
+function Products({ filteredProducts, addToCart }) {
   return (
     <div className="products">
       {filteredProducts.map((product) => (
@@ -8,7 +8,7 @@ function Products({ filteredProducts }) {
           <div>{product.codigo}</div>
           <div>{product.name}</div>
           <div className="price">{product.price}</div>
-          <button className="cart_button">Adicionar</button>
+          <button className="cart_button" onClick={addToCart}>Adicionar</button>
         </div>
       ))}
     </div>

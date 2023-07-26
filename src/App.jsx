@@ -17,6 +17,7 @@ import ProfilePic from './assets/profile.png';
 function App() {
   const [value,setValue] = useState('')
   const [uid, setUid] = useState(null);
+  const [cartCount, setCartCount] = useState(0);
   const handleClick =()=>{
     signInWithPopup(auth,provider).then((data)=>{
       setValue(data.user.email)
@@ -34,6 +35,11 @@ function App() {
     });
     return unsubscribe;
   }, []);
+
+  // Function to update the cart count
+  const addToCart = () => {
+    setCartCount((prevCount) => prevCount + 1);
+  };
   return(
     <>
       <Router className="navbar">
@@ -53,6 +59,7 @@ function App() {
               <li>
                 <Link to="/feed">
                   <TiShoppingCart style={{ fontSize: "2.5rem" }}/>
+                  {cartCount > 0 && <span className="cart-count">{cartCount}</span>}
                 </Link>
               </li>
               <li>
@@ -67,7 +74,7 @@ function App() {
         </div>
         <Routes>
             <Route path="/profile" element={<Profile />} />
-            <Route index path="/" element={<Home userId={uid}/>} />
+            <Route index path="/" element={<Home userId={uid} addToCart={addToCart}/>} />
             <Route path="/feed" element={<Feed />} />
         </Routes>
       </Router>
