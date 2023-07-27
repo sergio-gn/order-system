@@ -1,6 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../utils/store";
 
-function Products({ filteredProducts, addToCart }) {
+function Products({ filteredProducts }) {
+  const dispatch = useDispatch();
+  const [disabledButtons, setDisabledButtons] = useState({}); // Local state to track disabled status for each product
+
+  const handleAddToCart = (product) => {
+    dispatch(addToCart(product));
+    setDisabledButtons((prev) => ({ ...prev, [product.id]: true })); // Disable the clicked button
+  };
+
   return (
     <div className="products">
       {filteredProducts.map((product) => (
@@ -8,10 +18,17 @@ function Products({ filteredProducts, addToCart }) {
           <div>{product.codigo}</div>
           <div>{product.name}</div>
           <div className="price">{product.price}</div>
-          <button className="cart_button" onClick={addToCart}>Adicionar</button>
+          <button
+            className="cart_button"
+            onClick={() => handleAddToCart(product)}
+            disabled={disabledButtons[product.id]} // Set the button disabled status based on local state
+          >
+            Adicionar
+          </button>
         </div>
       ))}
     </div>
   );
 }
+
 export default Products;
