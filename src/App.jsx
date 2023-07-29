@@ -14,6 +14,8 @@ import { CartProvider } from "./utils/cardContext"; // Import the CartProvider
 import { Provider } from "react-redux"; // Import the Provider from react-redux
 import store from "./utils/store"; // Import the Redux store
 
+import CartLink from "./components/cartLink"
+
 function App() {
   const [value, setValue] = useState('')
   const [uid, setUid] = useState(null);
@@ -36,11 +38,6 @@ function App() {
     return unsubscribe;
   }, []);
 
-  // Function to update the cart count
-  const addToCart = () => {
-    setCartCount((prevCount) => prevCount + 1);
-  };
-
   return (
     <Provider store={store}>
       <CartProvider> 
@@ -60,8 +57,7 @@ function App() {
                 </li>
                 <li>
                   <Link to="/cart">
-                    <TiShoppingCart style={{ fontSize: "2.5rem" }} />
-                    {cartCount > 0 && <span className="cart-count">{cartCount}</span>}
+                    <CartLink />
                   </Link>
                 </li>
                 <li>

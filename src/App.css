@@ -90,7 +90,7 @@ nav ul {
   font-weight: bolder;
   margin: 0;
 }
-.profile-container{
+.profile-container, .cart-container{
   display: flex;
   align-items: center;
   color: #000;
@@ -184,6 +184,11 @@ nav ul {
 .products{
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 1rem;
+}
+.cart-wrapper{
+  display:flex;
+  flex-direction: column;
   gap: 1rem;
 }
 .categories{
