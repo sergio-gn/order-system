@@ -76,10 +76,12 @@ function Profile() {
   return (
     <div className="container">
       <div className="profile-container">
-        <p>Name: {name}</p>
-        <p>Join Date: {joinDate}</p>
+        <div className="product-solo">
+          <p>Name: {name}</p>
+          <p>Join Date: {joinDate}</p>
+          <button onClick={logout}>Logout</button>
+        </div>
         {isAdmin && <ProfileAdmin />}
-        <button onClick={logout}>Logout</button>
       </div>
     </div>
   );
