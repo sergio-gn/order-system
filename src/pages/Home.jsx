@@ -1,9 +1,9 @@
 import GetData from "../components/getData";
 
-function Home({addToCart}){
+function Home(){
     return(
         <div>
-            <GetData addToCart={addToCart}/>
+            <GetData/>
         </div>
     )
 }

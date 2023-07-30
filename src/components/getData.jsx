@@ -37,7 +37,6 @@ function GetData({addToCart}) {
     setSelectedClassification('');
     if (searchTerm) {
       const searchTermLower = searchTerm.toLowerCase();
-  
       const filteredProducts = products.filter((product) => {
         const nameMatch = product.name && product.name.toLowerCase().includes(searchTermLower);
         const codigoMatch = product.codigo && product.codigo.toLowerCase().includes(searchTermLower);
@@ -50,7 +49,6 @@ function GetData({addToCart}) {
       setSearchedProducts([]);
     }
   };
-  
   
   const filteredProducts = selectedClassification
     ? products.filter((product) => product.classification === selectedClassification)

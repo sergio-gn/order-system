@@ -80,8 +80,8 @@ function ProfileAdmin() {
           products.sort((a, b) => b.votes - a.votes);
           return (
               <div className="productCardAdmin" key={product.id}>
-                <p>Product: {product.name}</p>
-                <button onClick={() => deleteProduct(product.id)}>Delete Product</button>
+                <p>Produto: {product.name}</p>
+                <button onClick={() => deleteProduct(product.id)}>Deletar Product</button>
               </div>
           );
         })}

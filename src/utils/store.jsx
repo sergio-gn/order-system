@@ -1,20 +1,20 @@
 // utils/store.jsx
-
 import { configureStore, createSlice } from "@reduxjs/toolkit";
 
-// Create a new slice for managing the cart state
 const cartSlice = createSlice({
   name: "cart",
   initialState: {
-    cartItems: [], // An array to store products in the cart
-    isButtonDisabled: false, // A flag to track the button's disabled status
+    cartItems: [],
+    isButtonDisabled: {},
   },
   reducers: {
     addToCart: (state, action) => {
-      state.cartItems.push(action.payload); // Add the product to the cartItems array
+      state.cartItems.push(action.payload);
+      state.isButtonDisabled[action.payload.id] = true;
     },
-    setButtonDisabled: (state, action) => {
-      state.isButtonDisabled = action.payload; // Set the button's disabled status
+    removeFromCart: (state, action) => {
+      state.cartItems = state.cartItems.filter(product => product.id !== action.payload);
+      state.isButtonDisabled[action.payload] = false;
     },
   },
 });
@@ -23,12 +23,9 @@ const cartSlice = createSlice({
 const store = configureStore({
   reducer: {
     cart: cartSlice.reducer,
-    // Add other reducers as needed
-    // ...
   },
 });
 
 // Export actions for interacting with the cart state
-export const { addToCart, setButtonDisabled } = cartSlice.actions;
-
+export const { addToCart, setButtonDisabled, removeFromCart } = cartSlice.actions;
 export default store;

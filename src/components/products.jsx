@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../utils/store";
+import { TiShoppingCart } from 'react-icons/ti';
 
 function Products({ filteredProducts }) {
   const dispatch = useDispatch();
@@ -21,8 +22,9 @@ function Products({ filteredProducts }) {
           <button
             className="cart_button"
             onClick={() => handleAddToCart(product)}
-            disabled={disabledButtons[product.id]} // Set the button disabled status based on local state
+            disabled={disabledButtons[product.id]}
           >
+            <TiShoppingCart/>
             Adicionar
           </button>
         </div>

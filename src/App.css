@@ -215,6 +215,11 @@ nav ul {
   border: none;
   border-radius: 0.25rem;
   padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+}
+.cart_button:hover{
+  background: rgb(0, 121, 0);
 }
 /******responsive************/
 @media (max-width:1100px){
