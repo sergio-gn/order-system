@@ -33,6 +33,16 @@ function GetData({addToCart}) {
     setSearchedProducts([]);
   };
 
+  const handleClassificationClick = (classification) => {
+    setSelectedClassification(classification);
+    setSearchedProducts([]);
+  };
+
+  const handleShowAllClassifications = () => {
+    setSelectedClassification('');
+    setSearchedProducts([]);
+  };
+
   const handleSearch = (searchTerm) => {
     setSelectedClassification('');
     if (searchTerm) {
@@ -78,11 +88,14 @@ function GetData({addToCart}) {
         <div className="parent-categories">
           <div className="categories">
             <p className="small-title">Categorias</p>
-            {classifications.map((classification, index) => (
-                <p key={index} value={classification}>
-                  {classification}
-                </p>
-              ))}
+            <div className="categoriesButtons">
+              <button onClick={handleShowAllClassifications}>Show All</button>
+              {classifications.map((classification, index) => (
+                  <button key={index} onClick={() => handleClassificationClick(classification)}>
+                    {classification}
+                  </button>
+                ))}
+            </div>
           </div>
         </div>
       </div>

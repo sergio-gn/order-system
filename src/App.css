@@ -118,6 +118,12 @@ nav ul {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
 /************* end profile ****************/
+/************ categories ******************/
+.categoriesButtons button{
+  margin: 0.25rem 0;
+
+}
+/************ end categories ****************/
 .container-card{
   display: flex;
 }
