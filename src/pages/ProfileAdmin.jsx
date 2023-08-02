@@ -16,6 +16,8 @@ function ProfileAdmin() {
     codigo: "",
     name: "",
     price: 0,
+    promo: false,
+    promoprice: 0
   });
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
@@ -29,7 +31,9 @@ function ProfileAdmin() {
       classification: "",
       codigo: "",
       name: "",
-      price: "",
+      price: 0,
+      promo: false,
+      promoprice: 0
     });
   };
 
@@ -50,6 +54,13 @@ function ProfileAdmin() {
 
   const handleCancelEdit = () => {
     setSelectedProduct(null);
+  };
+
+  const handlePromoChange = (event) => {
+    setSelectedProduct({
+      ...selectedProduct,
+      promo: event.target.checked, 
+    });
   };
 
   useEffect(() => {
@@ -113,7 +124,7 @@ function ProfileAdmin() {
         <button className="profileButton" onClick={createProduct}>Criar Produto</button>
       </div>
 
-      <div className="profile-container">
+      <div className="profile-edit-product">
         <input
           className="searchBar-full"
           placeholder="Buscar pelo nome ou codigo..."
@@ -135,48 +146,62 @@ function ProfileAdmin() {
         {selectedProduct && (
           <div>
             <p>Editar Produto:</p>
-            <input
-              placeholder="Classification..."
-              value={selectedProduct.classification}
-              onChange={(event) =>
-                setSelectedProduct({
-                  ...selectedProduct,
-                  classification: event.target.value,
-                })
-              }
-            />
-            <input
-              placeholder="Codigo..."
-              value={selectedProduct.codigo}
-              onChange={(event) =>
-                setSelectedProduct({
-                  ...selectedProduct,
-                  codigo: event.target.value,
-                })
-              }
-            />
-            <input
-              placeholder="Name..."
-              value={selectedProduct.name}
-              onChange={(event) =>
-                setSelectedProduct({
-                  ...selectedProduct,
-                  name: event.target.value,
-                })
-              }
-            />
-            <input
-              placeholder="Price..."
-              value={selectedProduct.price}
-              onChange={(event) =>
-                setSelectedProduct({
-                  ...selectedProduct,
-                  price: event.target.value,
-                })
-              }
-            />
-            <button onClick={handleUpdateProduct}>Atualizar Produto</button>
-            <button onClick={handleCancelEdit}>Cancelar</button>
+            <div className="createProduct-dad profile-card">
+              <input
+                placeholder="Classification..."
+                value={selectedProduct.classification}
+                onChange={(event) =>
+                  setSelectedProduct({
+                    ...selectedProduct,
+                    classification: event.target.value,
+                  })
+                }
+              />
+              <input
+                placeholder="Codigo..."
+                value={selectedProduct.codigo}
+                onChange={(event) =>
+                  setSelectedProduct({
+                    ...selectedProduct,
+                    codigo: event.target.value,
+                  })
+                }
+              />
+              <input
+                placeholder="Name..."
+                value={selectedProduct.name}
+                onChange={(event) =>
+                  setSelectedProduct({
+                    ...selectedProduct,
+                    name: event.target.value,
+                  })
+                }
+              />
+              <input
+                placeholder="Price..."
+                value={selectedProduct.price}
+                onChange={(event) =>
+                  setSelectedProduct({
+                    ...selectedProduct,
+                    price: event.target.value,
+                  })
+                }
+              />
+              <div className="d-flex">
+                <input
+                placeholder="Novo preco promocional"
+                value={selectedProduct.promoprice}
+                onChange={(event) =>
+                  setSelectedProduct({
+                    ...selectedProduct,
+                    promoprice: event.target.value,
+                  })
+                }
+                />
+              </div>
+              <button onClick={handleUpdateProduct}>Atualizar Produto</button>
+              <button onClick={handleCancelEdit}>Cancelar</button>
+            </div>
           </div>
         )}
       </div>

@@ -103,11 +103,8 @@ nav ul {
 .profileButton{
   padding: 0.5rem;
 }
-.profile-container, .cart-container{
-  display: flex;
-  align-items: center;
+.profile-container{
   color: #000;
-  flex-direction: column;
   gap: 1rem;
   margin: 1rem;
 }
@@ -117,6 +114,11 @@ nav ul {
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
+.profile-edit-product{
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
 /************* end profile ****************/
 /************ categories ******************/
 .categoriesButtons button{
@@ -124,6 +126,29 @@ nav ul {
 
 }
 /************ end categories ****************/
+
+/*********** cart ***************************/
+.cart-container{
+  display: flex;
+  align-items: center;
+  color: #000;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 1rem;
+}
+/*********** end cart ***************************/
+
+/*********** homepage products *******************/
+.unactive-price{
+  color:rgb(158, 34, 34)!important;
+  font-size:1rem;
+  text-decoration: line-through
+}
+.promo-price{
+  color:rgb(4, 141, 4);
+  font-size: 2rem;
+}
+/*********** end homepage products *******************/
 .container-card{
   display: flex;
 }
