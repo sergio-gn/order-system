@@ -180,6 +180,7 @@ nav ul {
   color:rgb(4, 141, 4);
 }
 .product-solo{
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -200,6 +201,20 @@ nav ul {
 }
 .cart_button:hover{
   background: rgb(0, 121, 0);
+}
+.promo-badge {
+  background: darkgreen;
+  top: -1rem;
+  right: -0.5rem;
+  border-radius: 10rem;
+  font-weight: 700;
+  color: #fff;
+  padding: 0.5rem;
+  position: absolute;
+  width: 2rem;
+  height: 2rem;
+  align-items: center;
+  display: flex;
 }
 /*********** end homepage products *******************/
 .container-card{
