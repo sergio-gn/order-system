@@ -42,7 +42,7 @@ function Cart() {
             {groupedCartItems.map((product) => (
               <div className="product-solo" key={product.id}>
                 <div>
-                  {product.name} {product.quantity > 1 && `x${product.quantity}`} {/* Show the count if quantity is greater than 1 */}
+                  {product.name} {product.quantity > 1 && `x${product.quantity}`}
                 </div>
                 {product.promoprice ? (<div className="promo-price">{product.promoprice}</div>) : <div>{product.price}</div>}
                 <button onClick={() => handleRemoveFromCart(product.id)}>Remove Item</button>

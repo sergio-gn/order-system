@@ -12,28 +12,33 @@ function Products({ filteredProducts }) {
     setDisabledButtons((prev) => ({ ...prev, [product.id]: true })); // Disable the clicked button
   };
 
+  filteredProducts.forEach((product) => {
+    console.log("Promo Price:", product.promoprice);
+  });
+  
   return (
     <div className="products">
       {filteredProducts.map((product) => (
         <div className="product-solo" key={product.id}>
-          <div>{product.codigo}</div>
-          <div>{product.name}</div>
-          
-          <div className={`price ${product.promoprice ? "unactive-price" : ""}`}>
-            {product.price}
+          <div className="product-name medium-font bold t-center">
+            {product.name}
           </div>
-
-          {product.promoprice && (
-            <div className="d-flex">
-              <p>
-              Promo Price: 
-              </p>
-              <p className="promo-price">
-                {product.promoprice}
-              </p>
+          <div className="small-font">
+            Cod: {product.codigo}
+          </div>
+          <div className="d-center">
+            <div className={`bold medium-font ${product.promoprice ? "unactive-price" : ""}`}>
+              R$: {product.price}
             </div>
-          )}
+            {product.promoprice && (
+              <div className="t-center">
+                <p className="medium-font promo-price bold">
+                R$: {product.promoprice !== 0 ? product.promoprice : ''}
 
+                </p>
+              </div>
+            )}
+          </div>
           <button
             className="cart_button"
             onClick={() => handleAddToCart(product)}

@@ -86,7 +86,7 @@ function GetData({addToCart}) {
           <Products addToCart={addToCart} filteredProducts={filteredProducts} />
         </div>
         <div className="parent-categories">
-          <div className="categories">
+          <div className="child-categories">
             <p className="small-title">Categorias</p>
             <div className="categoriesButtons">
               <button onClick={handleShowAllClassifications}>Show All</button>

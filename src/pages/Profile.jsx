@@ -76,7 +76,7 @@ function Profile() {
   return (
     <div className="container">
       <div className="profile-container">
-        <div className="product-solo">
+        <div className="t-center">
           <p>Name: {name}</p>
           <p>Join Date: {joinDate}</p>
           <button onClick={logout}>Logout</button>

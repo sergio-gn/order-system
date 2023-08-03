@@ -17,7 +17,8 @@ function ProfileAdmin() {
     name: "",
     price: 0,
     promo: false,
-    promoprice: 0
+    promoprice: "",
+    indisponivel: false
   });
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
@@ -33,7 +34,8 @@ function ProfileAdmin() {
       name: "",
       price: 0,
       promo: false,
-      promoprice: 0
+      promoprice: "",
+      indisponivel: false
     });
   };
 
@@ -56,11 +58,8 @@ function ProfileAdmin() {
     setSelectedProduct(null);
   };
 
-  const handlePromoChange = (event) => {
-    setSelectedProduct({
-      ...selectedProduct,
-      promo: event.target.checked, 
-    });
+  const handleIndisponivelChange = (event) => {
+    setNewProduct({ ...newProduct, indisponivel: event.target.checked });
   };
 
   useEffect(() => {
@@ -120,6 +119,14 @@ function ProfileAdmin() {
               setNewProduct({ ...newProduct, price: event.target.value })
             }
           />
+          <div className="d-flex">
+            Indisponivel:
+            <input
+              type="checkbox"
+              checked={newProduct.indisponivel}
+              onChange={handleIndisponivelChange}
+            />
+          </div>
         </div>
         <button className="profileButton" onClick={createProduct}>Criar Produto</button>
       </div>
