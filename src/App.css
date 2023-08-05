@@ -1,6 +1,6 @@
 .container {
-  padding-right: 40px;
-  padding-left: 40px;
+  padding-right: 20px;
+  padding-left: 20px;
   margin-right: auto;
   margin-left: auto;
 }
@@ -107,6 +107,7 @@ nav ul {
 .Select_and_Search_Bar{
   margin: 1rem;
   display: flex;
+  
 }
 .searchBar, .searchBar-full{
   color: #000;
@@ -140,6 +141,9 @@ nav ul {
 }
 .login{
   text-align: right;
+}
+.logo{
+  margin: 1rem;
 }
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
@@ -204,6 +208,7 @@ nav ul {
 }
 .cart_button{
   background: rgb(4, 141, 4);
+  color: #fff;
   border: none;
   border-radius: 0.25rem;
   padding: 0.5rem 1rem;
@@ -358,8 +363,12 @@ nav ul {
 }
 /******responsive************/
 @media (max-width:1100px){
+  .parent-categories{
+    width: 100%;
+  }
   .Select_and_Search_Bar{
     margin: 1rem 0;
+    justify-content: center;
   }
   .nav-class{
     flex-direction: column;

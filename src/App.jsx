@@ -9,7 +9,7 @@ import Cart from './pages/Cart';
 import CartLink from "./components/cartLink";
 import Logged from './components/logged';
 //assets
-import Tambasa from "./assets/TambasaFacil.svg";
+import Logo from "./assets/buy.svg";
 import { TiUser, TiHome} from "react-icons/ti";
 import './App.css';
 //firebase
@@ -47,7 +47,7 @@ function App() {
           <nav className="nav-class container">
             <Link className="linklogo" to="/">
               <div className="logo">
-                <img src={Tambasa} alt="Logo Tambasa" />
+                <img src={Logo} alt="Logo" />
               </div>
             </Link>
             <ul>

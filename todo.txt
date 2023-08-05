@@ -1,0 +1,3 @@
+-Create POP UP when add new product on the cart. Inside the pop up show how many the user wants to put into the cart.
+-Adjust Phone Layout
+-Export to Cart to pdf - WhatsApp

@@ -17,3 +17,5 @@ FUTURE:
 > - Modify the permissions to create, read, update and delete
 > - Generate the firebase API
 > - Rename .env-example to .env and insert the data from your firebaseconfig there.
+
+![Print](src/assets/print.jpeg)
