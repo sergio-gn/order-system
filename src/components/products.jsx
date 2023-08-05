@@ -18,11 +18,14 @@ function Products({ filteredProducts }) {
         <div className="product-solo" key={product.id}>
         {product.price && product.promoprice ? (
           <div className="promo-badge">
-            {((parseFloat(product.price) - parseFloat(product.promoprice)) / parseFloat(product.price) * 100).toFixed(2).substring(0, 2)}%
+            {Math.floor(((parseFloat(product.price) - parseFloat(product.promoprice)) / parseFloat(product.price)) * 100)}%
           </div>
         ) : (
           ""
         )}
+        <div className="image-product-wrapper">
+          {product.photoUrl && <img className="product-photo" src={product.photoUrl} alt={product.name} />}
+        </div>
           <div className="product-name medium-font bold t-center">
             {product.name}
           </div>
@@ -35,12 +38,12 @@ function Products({ filteredProducts }) {
                 {product.price !== undefined && (
                   <>
                     <div className={`bold medium-font ${product.promoprice ? "unactive-price" : ""}`}>
-                      R$: {product.price}
+                      R$: {product.price} {product.productMetric}
                     </div>
                       {product.promoprice && (
                         <div className="t-center">
                           <p className="medium-font promo-price bold">       
-                            R$: {product.promoprice !== 0 ? product.promoprice : ''}
+                            R$: {product.promoprice !== 0 ? product.promoprice : ''} {product.productMetric}
                           </p>
                         </div>
                       )}

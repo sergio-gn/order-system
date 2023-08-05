@@ -48,6 +48,12 @@
   font-size: 1.1rem;
   margin: 0.3rem;
 }
+.gap-05{
+  gap: 0.5rem;
+}
+.gap-1{
+  gap: 1rem;
+}
 .bold{
   font-weight: bold;
 }
@@ -140,9 +146,14 @@ nav ul {
 }
 .profile-edit-product{
   display: flex;
-  align-items: center;
+  align-items: baseline;
   justify-content: center;
 }
+.edit-btn-green {
+  background-color: green;
+  color: white;
+}
+
 /************* end profile ****************/
 /************ categories ******************/
 .categoriesButtons button{
@@ -215,6 +226,16 @@ nav ul {
   height: 2rem;
   align-items: center;
   display: flex;
+  justify-content: center;
+}
+.image-product-wrapper{
+  height:10rem;
+  overflow: hidden;
+  object-fit: cover;
+}
+.product-photo{
+  width: 10rem;
+  height:auto;
 }
 /*********** end homepage products *******************/
 .container-card{
@@ -320,11 +341,16 @@ nav ul {
   padding: 0.5rem;
   border-radius: 1rem;
 }
-.createProduct-dad{
+.createProduct-dad, .editProduct-dad{
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
+.createProduct-dad{
+  width: 40rem;
+  margin: auto;
+}
+
 .createProduct{
   display: grid;
   grid-template-columns: 1fr 1fr;

@@ -8,8 +8,12 @@ import {
   deleteDoc,
   doc,
 } from "firebase/firestore";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { storage } from "../firebaseconfig";
+import EditButton from "../components/editButton";
 
 function ProfileAdmin() {
+  const productsCollectionRef = collection(db, "Products");
   const [products, setProducts] = useState([]);
   const [newProduct, setNewProduct] = useState({
     classification: "",
@@ -18,48 +22,109 @@ function ProfileAdmin() {
     price: 0,
     promo: false,
     promoprice: "",
-    indisponivel: false
+    productMetric: "",
+    indisponivel: false,
+    photoUrl: "",
   });
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchedProducts, setSearchedProducts] = useState([]);
   const [selectedProductIndisponivel, setSelectedProductIndisponivel] = useState(false);
-  const productsCollectionRef = collection(db, "Products");
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [uploading, setUploading] = useState(false); 
+  const [messages, setMessages] = useState("");
 
+  
   const createProduct = async () => {
-    await addDoc(productsCollectionRef, newProduct);
-    setNewProduct({
-      classification: "",
-      codigo: "",
-      name: "",
-      price: 0,
-      promo: false,
-      promoprice: "",
-      indisponivel: false
-    });
+    try {
+      // Check if an image is being uploaded
+      if (uploading) {
+        setMessages("Por favor Aguarde, fazendo Upload da Imagem...");
+        return;
+      }
+  
+      // Upload the photo to Firebase Storage
+      if (selectedFile) {
+        setUploading(true); // Set uploading state to true
+        setMessages("Por favor Aguarde, fazendo Upload da Imagem...");
+  
+        const storageRef = ref(storage, `productImages/${selectedFile.name}`);
+        const uploadTask = uploadBytesResumable(storageRef, selectedFile);
+  
+        try {
+          const snapshot = await uploadTask;
+          const photoUrl = await getDownloadURL(snapshot.ref);
+          setMessages("Upload da Imagem realizado com Sucesso");
+          console.log("Photo URL:", photoUrl);
+  
+          // Update the newProduct state with the photoUrl
+          setNewProduct({ ...newProduct, photoUrl });
+  
+          // Create the product in the Firestore database after the photoUrl is set
+          await addDoc(productsCollectionRef, { ...newProduct, photoUrl });
+  
+          setUploading(false); // Set uploading state to false after successful upload
+        } catch (error) {
+          setMessages("Erro ao fazer upload da foto", error);
+          setUploading(false); // Set uploading state to false in case of an error
+        }
+      } else {
+        // If no photo is selected, create the product without the photoUrl
+        await addDoc(productsCollectionRef, newProduct);
+      }
+      
+      setMessages("Produto Criado com Sucesso");
+      setNewProduct({
+        classification: "",
+        codigo: "",
+        name: "",
+        price: 0,
+        promo: false,
+        promoprice: "",
+        productMetric: "",
+        indisponivel: false,
+        photoUrl: "",
+      });
+    } catch (error) {
+      setMessages("Erro ao criar produto:", error);
+    }
   };
+  
+  
+  
 
   const deleteProduct = async (id) => {
     const productDoc = doc(db, "Products", id);
     await deleteDoc(productDoc);
   };
-
+  
   const handleSelectProduct = (product) => {
     setSelectedProduct(product);
     setSelectedProductIndisponivel(product.indisponivel);
   };
   
-
+  const handleFileUpload = (event) => {
+    const file = event.target.files[0];
+    setSelectedFile(file);
+  };
   const handleUpdateProduct = async () => {
+    if (typeof selectedProductIndisponivel === "undefined") {
+      // Handle the case when selectedProductIndisponivel is undefined
+      console.error("Produto Indisponivel Indefinido");
+      return;
+    }
     const updatedProduct = {
       ...selectedProduct,
       indisponivel: selectedProductIndisponivel,
     };
-  
-    const productDocRef = doc(db, "Products", selectedProduct.id);
-    await updateDoc(productDocRef, updatedProduct);
-    setSelectedProduct(null);
-  };  
+    try {
+      const productDocRef = doc(db, "Products", selectedProduct.id);
+      await updateDoc(productDocRef, updatedProduct);
+      setSelectedProduct(null);
+    } catch (error) {
+      console.error("Error updating product:", error);
+    }
+  };
 
   const handleCancelEdit = () => {
     setSelectedProduct(null);
@@ -68,14 +133,6 @@ function ProfileAdmin() {
   const handleIndisponivelChange = (event) => {
     setNewProduct({ ...newProduct, indisponivel: event.target.checked });
   };
-
-  useEffect(() => {
-    const getProducts = async () => {
-      const data = await getDocs(productsCollectionRef);
-      setProducts(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    };
-    getProducts();
-  }, []);
 
   const handleSearch = (searchTerm) => {
     setSearchTerm(searchTerm);
@@ -93,6 +150,14 @@ function ProfileAdmin() {
       setSearchedProducts([]); // Empty array when no search term
     }
   };
+  useEffect(() => {
+    const getProducts = async () => {
+      const data = await getDocs(productsCollectionRef);
+      setProducts(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    };
+    getProducts();
+  }, []);
+
 
   return (
     <div className="App">
@@ -126,6 +191,20 @@ function ProfileAdmin() {
               setNewProduct({ ...newProduct, price: event.target.value })
             }
           />
+          <input
+            placeholder="Promocional..."
+            value={newProduct.promoprice}
+            onChange={(event) =>
+              setNewProduct({ ...newProduct, promoprice: event.target.value })
+            }
+          />
+          <input
+            placeholder="Un, Cx, Duzia..."
+            value={newProduct.productMetric}
+            onChange={(event) =>
+              setNewProduct({ ...newProduct, productMetric: event.target.value })
+            }
+          />
           <div className="d-flex">
             Indisponivel:
             <input
@@ -134,11 +213,12 @@ function ProfileAdmin() {
               onChange={handleIndisponivelChange}
             />
           </div>
+          <input type="file" onChange={(event) => handleFileUpload(event)} />
         </div>
-        <button className="profileButton" onClick={createProduct}>Criar Produto</button>
+        <EditButton buttonText={"Criar Produto"} onClick={createProduct}/>
+        {messages}
       </div>
-
-      <div className="profile-edit-product">
+      <div className="profile-edit-product gap-1">
         <input
           className="searchBar-full"
           placeholder="Buscar pelo nome ou codigo..."
@@ -151,8 +231,10 @@ function ProfileAdmin() {
               <div className="productCardAdmin" key={product.id}>
                 <p>Produto: {product.name}</p>
                 <p>Codigo: {product.codigo}</p>
-                <button onClick={() => deleteProduct(product.id)}>Deletar Produto</button>
-                <button onClick={() => handleSelectProduct(product)}>Editar Produto</button>
+                <div className="gap-05 d-flex">
+                  <EditButton buttonText={"Deletar Produto"} onClick={() => deleteProduct(product.id)}/>
+                  <button onClick={() => handleSelectProduct(product)}>Editar Produto</button>
+                </div>
               </div>
             );
           })}
@@ -160,7 +242,7 @@ function ProfileAdmin() {
         {selectedProduct && (
           <div>
             <p>Editar Produto:</p>
-              <div className="createProduct-dad profile-card">
+              <div className="editProduct-dad profile-card">
                 <input
                   placeholder="Classification..."
                   value={selectedProduct.classification}
@@ -201,6 +283,16 @@ function ProfileAdmin() {
                     })
                   }
                 />
+                <input
+                  placeholder="Un, Cx..."
+                  value={selectedProduct.productMetric}
+                  onChange={(event) =>
+                    setSelectedProduct({
+                      ...selectedProduct,
+                      productMetric: event.target.value,
+                    })
+                  }
+                />
                 <div className="d-flex">
                   <input
                   placeholder="Novo preco promocional"
@@ -221,7 +313,7 @@ function ProfileAdmin() {
                   />
                 </div>
               </div>
-              <button onClick={handleUpdateProduct}>Atualizar Produto</button>
+              <EditButton buttonText={"Editar Produto"} onClick={handleUpdateProduct}/>
               <button onClick={handleCancelEdit}>Cancelar</button>
             </div>
           </div>
