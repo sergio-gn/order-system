@@ -20,7 +20,7 @@ import { Provider } from "react-redux";
 import store from "./utils/store";
 
 function App() {
-  const [value, setValue] = useState('')
+  const [value, setValue] = useState('');
   const [uid, setUid] = useState(null);
   const handleClick = () => {
     signInWithPopup(auth, provider).then((data) => {

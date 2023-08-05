@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../utils/store";
 import { TiShoppingCart } from "react-icons/ti";
+import { json } from "react-router-dom";
 
 function Products({ filteredProducts }) {
   const dispatch = useDispatch();
