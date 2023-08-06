@@ -1,32 +1,25 @@
-import React, { useState, useEffect } from "react";
-import { collection, getDocs, where, query } from 'firebase/firestore';
-import { db } from '../firebaseconfig';
+import React, { useState, useEffect, useMemo } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchProducts } from "../utils/store";
 import Products from "./products";
 import SearchBar from "./SearchBar";
-import { TiZoomIn} from "react-icons/ti";
+import { TiZoomIn } from "react-icons/ti";
 
-function GetData({addToCart}) {
-  const [products, setProducts] = useState([]);
-  const [classifications, setClassifications] = useState([]);
+function GetData({ addToCart }) {
+  const dispatch = useDispatch();
   const [selectedClassification, setSelectedClassification] = useState('');
   const [searchedProducts, setSearchedProducts] = useState([]);
+  // Memoize the products data using useMemo
+  const products = useSelector((state) => state.products.products);
+  const memoizedProducts = useMemo(() => products, [products]);
+  // Compute classifications using useMemo to ensure memoization
+  const classifications = useMemo(() => {
+    return [...new Set(memoizedProducts.map((product) => product.classification))];
+  }, [memoizedProducts]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      // Fetch products data
-      const productsSnapshot = await getDocs(collection(db, "Products"));
-      const productsData = productsSnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-      setProducts(productsData);
-
-      // Fetch unique classifications from products data
-      const uniqueClassifications = [...new Set(productsData.map((product) => product.classification))];
-      setClassifications(uniqueClassifications);
-
-      console.log("UseEffect triggered in GetData component");
-    };
-
-    fetchData();
-  }, []);
+    dispatch(fetchProducts());
+  }, [dispatch]);
 
   const handleClassificationChange = (event) => {
     setSelectedClassification(event.target.value);
@@ -47,7 +40,7 @@ function GetData({addToCart}) {
     setSelectedClassification('');
     if (searchTerm) {
       const searchTermLower = searchTerm.toLowerCase();
-      const filteredProducts = products.filter((product) => {
+      const filteredProducts = memoizedProducts.filter((product) => {
         const nameMatch = product.name && product.name.toLowerCase().includes(searchTermLower);
         const codigoMatch = product.codigo && product.codigo.toLowerCase().includes(searchTermLower);
   
@@ -61,10 +54,10 @@ function GetData({addToCart}) {
   };
   
   const filteredProducts = selectedClassification
-    ? products.filter((product) => product.classification === selectedClassification)
+    ? memoizedProducts.filter((product) => product.classification === selectedClassification)
     : searchedProducts.length > 0
       ? searchedProducts
-      : products;
+      : memoizedProducts;
 
   return (
     <div className="container">

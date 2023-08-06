@@ -385,9 +385,14 @@ nav ul {
     margin:0;
   }
   .products{
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
   }
   .parent-categories{
     margin: 0;
+  }
+}
+@media(max-width:500px){
+  .products{
+    grid-template-columns: 1fr;
   }
 }

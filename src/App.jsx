@@ -1,6 +1,12 @@
 // general react
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { useState, useEffect } from "react";
+//firebase
+import { signInWithPopup, onAuthStateChanged } from "firebase/auth";
+import { provider, auth } from "./firebaseconfig";
+//redux
+import { Provider } from "react-redux";
+import store from "./utils/store";
 //pages
 import Profile from './pages/Profile';
 import Home from './pages/Home';
@@ -12,16 +18,10 @@ import Logged from './components/logged';
 import Logo from "./assets/buy.svg";
 import { TiUser, TiHome} from "react-icons/ti";
 import './App.css';
-//firebase
-import { signInWithPopup, onAuthStateChanged } from "firebase/auth";
-import { provider, auth } from "./firebaseconfig";
-//redux
-import { Provider } from "react-redux";
-import store from "./utils/store";
 
 function App() {
   const [value, setValue] = useState('');
-  const [uid, setUid] = useState(null);
+  const [user, setUser] = useState(null);
   const handleClick = () => {
     signInWithPopup(auth, provider).then((data) => {
       setValue(data.user.email)
@@ -31,13 +31,9 @@ function App() {
   useEffect(() => {
     setValue(localStorage.getItem('email'))
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUid(user.uid);
-      } else {
-        setUid(null);
-      }
+      setUser(user);
     });
-    return unsubscribe;
+    return () => unsubscribe();
   }, []);
 
   return (
