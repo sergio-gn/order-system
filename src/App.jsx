@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { useState, useEffect } from "react";
 //firebase
 import { signInWithPopup, onAuthStateChanged } from "firebase/auth";
-import { provider, auth } from "./firebaseconfig";
+import { provider, auth } from "./utils/firebaseconfig";
 //redux
 import { Provider } from "react-redux";
 import store from "./utils/store";

@@ -1,4 +1,4 @@
-### CRUD - REACT - VITE.JS - FIREBASE
+### CRUD - REACT - VITE.JS - FIREBASE - REDUX
 # Find Products and Request Order
 ## Features
 
@@ -12,7 +12,7 @@ FUTURE:
 > - Share the selected Products as a Ticket in pdf to your WhatsApp or Email.
 
 ## To Use this project
-> - Download it and NPM INSTALL
+> - Clone it with the command git clone {repositorylink} and NPM INSTALL for all the dependencies
 > - Create your Firebase Account
 > - Modify the permissions to create, read, update and delete
 > - Generate the firebase API

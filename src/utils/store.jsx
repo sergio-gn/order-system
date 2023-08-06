@@ -1,5 +1,5 @@
 import { configureStore, createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { fetchDataFromFirebase } from "../firebaseUtils";
+import { fetchDataFromFirebase } from "./firebaseUtils";
 
 // Create an async thunk for fetching data from Firebase
 export const fetchProducts = createAsyncThunk("products/fetch", async () => {

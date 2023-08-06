@@ -1,6 +1,8 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { removeFromCart } from '../utils/store';
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import PDFDocument from '../components/PdfDocument';
 
 function groupCartItems(cartItems) {
   // Create an object to store the count of each product name
@@ -19,6 +21,27 @@ function groupCartItems(cartItems) {
   // Return an array of grouped cart items
   return Object.values(countMap);
 }
+
+const GeneratePDFLink = ({ cartItems }) => {
+  const pdfData = (
+    <PDFDocument cartItems={cartItems} />
+  );
+  const blob = new Blob([pdfData], { type: 'application/pdf' });
+  const url = URL.createObjectURL(blob);
+
+  // Provide the PDFDownloadLink component with the PDF blob data
+  return (
+    <PDFDownloadLink 
+      className="cart-pdflink"
+      document={pdfData}
+      fileName="cart.pdf"
+    >
+      {({ blob, url, loading, error }) =>
+        loading ? 'Loading document...' : 'Download PDF'
+      }
+    </PDFDownloadLink>
+  );
+};
 
 function Cart() {
   const cartItems = useSelector((state) => state.cart.cartItems);
@@ -51,6 +74,7 @@ function Cart() {
           </div>
         )}
       </div>
+      <GeneratePDFLink cartItems={cartItems} />
     </div>
   );
 }

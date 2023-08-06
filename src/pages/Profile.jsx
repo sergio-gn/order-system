@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getAuth, signOut } from "firebase/auth";
 import { doc, updateDoc, getDoc, setDoc } from "firebase/firestore";
-import { db } from '../firebaseconfig';
+import { db } from '../utils/firebaseconfig';
 import ProfileAdmin from "./ProfileAdmin"; // Import the ProfileAdmin component
 
 function Profile() {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { db } from "../firebaseconfig";
+import { db } from "../utils/firebaseconfig";
 import {
   collection,
   getDocs,
@@ -9,7 +9,7 @@ import {
   doc,
 } from "firebase/firestore";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { storage } from "../firebaseconfig";
+import { storage } from "../utils/firebaseconfig";
 import EditButton from "../components/editButton";
 
 function ProfileAdmin() {
