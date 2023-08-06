@@ -52,7 +52,12 @@ function Cart() {
   const handleRemoveFromCart = (productId) => {
     dispatch(removeFromCart(productId));
   };
-
+  const generateMessage = (cartItems) => {
+    const message = cartItems.map(
+      (product) => `${product.name} - Price: ${product.promoprice ? product.promoprice : product.price} - Codigo: ${product.codigo}`
+    );
+    return message.join('\n');
+  };
   return (
     <div className="container cart-container">
       <h1>Cart Page</h1>
@@ -74,6 +79,10 @@ function Cart() {
           </div>
         )}
       </div>
+      <form id="hiddenForm" action={`https://formsubmit.co/${import.meta.env.VITE_EMAIL_FORM}`} method="POST">
+        <input type="hidden" name="text" value={generateMessage(cartItems)} />
+        <button type="submit">Enviar Pedido</button>
+      </form>
       <GeneratePDFLink cartItems={cartItems} />
     </div>
   );
