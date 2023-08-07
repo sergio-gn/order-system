@@ -26,3 +26,5 @@ dist-ssr
 partyhunter.svg
 party.jpg
 .env
+.firebase
+.firebaserc

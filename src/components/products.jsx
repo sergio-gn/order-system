@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../utils/store";
 import { TiShoppingCart } from "react-icons/ti";
-import { json } from "react-router-dom";
+import Modal from "./modal"
 
 function Products({ filteredProducts }) {
   const dispatch = useDispatch();
@@ -12,7 +12,7 @@ function Products({ filteredProducts }) {
     dispatch(addToCart(product));
     setDisabledButtons((prev) => ({ ...prev, [product.id]: true }));
   };
-
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <div className="products">
       {filteredProducts.map((product) => (
@@ -63,6 +63,10 @@ function Products({ filteredProducts }) {
               Adicionar
             </button>
           ) : <button disabled>Indisponivel</button>}
+                <button className="primaryBtn" onClick={() => setIsOpen(true)}>
+                  Open Modal
+                </button>
+          {isOpen && <Modal setIsOpen={setIsOpen} />}
         </div>
       ))}
     </div>
