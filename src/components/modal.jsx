@@ -4,23 +4,20 @@ const Modal = ({ isOpen, setIsOpen }) => {
   useEffect(() => {
     let bodyOverflowStyle;
     let htmlOverflowStyle;
-
+    console.log("modal useEffect")
     if (isOpen) {
       // Store the original overflow styles
       bodyOverflowStyle = document.body.style.overflow;
       htmlOverflowStyle = document.documentElement.style.overflow;
-
       // Set overflow to hidden when the modal is open
       document.body.style.overflow = "hidden";
       document.documentElement.style.overflow = "hidden";
     }
-
     // This effect cleanup function runs when the component unmounts or when the modal is closed
     return () => {
       if (isOpen) {
-        // Reset the overflow styles to their original values when unmounting or closing the modal
-        document.body.style.overflow = bodyOverflowStyle;
-        document.documentElement.style.overflow = htmlOverflowStyle;
+        document.body.style.overflow = "hidden";
+        document.documentElement.style.overflow = "hidden";
       }
     };
   }, [isOpen]);
