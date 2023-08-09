@@ -421,8 +421,8 @@ dialog::backdrop{
 }
 
 .modal {
+  padding: 1rem;
   width: 250px;
-  height: 170px;
   background: white;
   color: white;
   z-index: 10;
@@ -431,7 +431,6 @@ dialog::backdrop{
 }
 
 .modalHeader {
-  height: 50px;
   background: white;
   overflow: hidden;
   border-top-left-radius: 16px;
@@ -452,13 +451,6 @@ dialog::backdrop{
   font-size: 14px;
   color: #2c3e50;
   text-align: center;
-}
-
-.modalActions {
-  position: absolute;
-  bottom: 2px;
-  margin-bottom: 10px;
-  width: 100%;
 }
 
 .actionsContainer {

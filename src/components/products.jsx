@@ -74,38 +74,37 @@ function Products({ filteredProducts }) {
         </div>
       ))}
       {isOpen && selectedProduct && (
-              <div>
-                <div className="darkBG" onClick={closeModal} />
-                  <div className="centered">
-                    <div className="modal">
-                      <button className="closeBtn" onClick={closeModal}>
-                        x
-                      </button>
-                      <div className="modalHeader">
-                        <div className="heading">
-                          {selectedProduct.name} <br></br>
-                          {selectedProduct.codigo}
-                        </div>
-                      </div>
-                      <div className="modalContent">
-                        Quantidade: <input type="text"/>
-                      </div>
-                      <div className="modalActions">
-                        <div className="actionsContainer">
-
-                            <button
-                              className="cart_button"
-                              onClick={() => handleAddToCart(selectedProduct)}
-                              disabled={disabledButtons[selectedProduct.id]}
-                            >
-                              <TiShoppingCart />
-                              Adicionar
-                            </button>
-                        </div>
-                      </div>
-                    </div>
+        <div>
+          <div className="darkBG" onClick={closeModal} />
+            <div className="centered">
+              <div className="modal">
+                <button className="closeBtn" onClick={closeModal}>
+                  x
+                </button>
+                <div className="modalHeader">
+                  <div className="heading">
+                    {selectedProduct.name} <br></br>
+                    {selectedProduct.codigo}
                   </div>
                 </div>
+                <div className="modalContent">
+                  Quantidade: <input type="text"/>
+                </div>
+                <div className="modalActions">
+                  <div className="actionsContainer">
+                      <button
+                        className="cart_button"
+                        onClick={() => handleAddToCart(selectedProduct)}
+                        disabled={disabledButtons[selectedProduct.id]}
+                      >
+                        <TiShoppingCart />
+                        Adicionar
+                      </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
       )}
     </div>
   );
