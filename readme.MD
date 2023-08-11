@@ -18,4 +18,4 @@ FUTURE:
 > - Generate the firebase API
 > - Rename .env-example to .env and insert the data from your firebaseconfig there.
 
-![Print](src/assets/print.jpeg)
+![Print](src/assets/print.PNG)
