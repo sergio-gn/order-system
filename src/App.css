@@ -73,6 +73,9 @@
   display:flex;
   align-items: center;
 }
+.justify-center{
+  justify-content: center;
+}
 .small-title {
   font-size: 1.2rem;
   font-weight: bolder;
@@ -98,7 +101,7 @@ nav ul {
   align-items: center;
 }
 .header{
-  background-color: #001983;
+  background-color: #5172E9;
   border-radius: 0 0 1rem 1rem;
   max-width: 100vw;
 }
@@ -331,6 +334,9 @@ dialog::backdrop{
   width: 90%;
   margin: 1rem;
 }
+.input-quantity{
+  width: 4rem;
+}
 .products{
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -440,7 +446,7 @@ dialog::backdrop{
 .heading {
   margin: 0;
   padding: 10px;
-  color: #2c3e50;
+  color: #5172E9;
   font-weight: 500;
   font-size: 18px;
   text-align: center;

@@ -5,11 +5,15 @@ import { TiShoppingCart } from "react-icons/ti";
 
 function Products({ filteredProducts }) {
   const dispatch = useDispatch();
+
+  const [quantity, setQuantity] = useState(0);
+  console.log(quantity);
   const [disabledButtons, setDisabledButtons] = useState({});
-  const handleAddToCart = (product) => {
-    dispatch(addToCart(product));
+  
+  const handleAddToCart = (product, quantity) => {
+    dispatch(addToCart({ product, quantity }));
     setDisabledButtons((prev) => ({ ...prev, [product.id]: true }));
-  };
+  };  
   const [isOpen, setIsOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const openModal = (product) => {
@@ -88,13 +92,22 @@ function Products({ filteredProducts }) {
                   </div>
                 </div>
                 <div className="modalContent">
-                  Quantidade: <input type="text"/>
+                  <div className="d-center justify-center gap-1">
+                    <span>Quantidade:</span>
+                    <input 
+                      className="input-quantity"
+                      placeholder="0"
+                      type="number"
+                      value={quantity}
+                      onChange={(e) => setQuantity(e.target.value)}
+                    />
+                  </div>
                 </div>
                 <div className="modalActions">
                   <div className="actionsContainer">
                       <button
                         className="cart_button"
-                        onClick={() => handleAddToCart(selectedProduct)}
+                        onClick={() => handleAddToCart(selectedProduct, quantity)}
                         disabled={disabledButtons[selectedProduct.id]}
                       >
                         <TiShoppingCart />

@@ -40,18 +40,28 @@ const cartSlice = createSlice({
   initialState: {
     cartItems: [],
     isButtonDisabled: {},
+    quantities: {}, // Add this property to track quantities
   },
   reducers: {
     addToCart: (state, action) => {
-      state.cartItems.push(action.payload);
-      state.isButtonDisabled[action.payload.id] = true;
+      const { product, quantity } = action.payload;
+      state.cartItems.push(product);
+      state.isButtonDisabled[product.id] = true;
+      state.quantities[product.id] = quantity; // Save the quantity
     },
     removeFromCart: (state, action) => {
-      state.cartItems = state.cartItems.filter((product) => product.id !== action.payload);
-      state.isButtonDisabled[action.payload] = false;
+      const productId = action.payload;
+      state.cartItems = state.cartItems.filter((product) => product.id !== productId);
+      state.isButtonDisabled[productId] = false;
+      delete state.quantities[productId]; // Remove quantity when removing from cart
+    },
+    updateQuantity: (state, action) => {
+      const { productId, quantity } = action.payload;
+      state.quantities[productId] = quantity;
     },
   },
 });
+
 
 const store = configureStore({
   reducer: {

@@ -15,7 +15,7 @@ import Cart from './pages/Cart';
 import CartLink from "./components/cartLink";
 import Logged from './components/logged';
 //assets
-import Logo from "./assets/buy.svg";
+import Logo from "./assets/easycart.svg";
 import { TiUser, TiHome} from "react-icons/ti";
 import './App.css';
 

@@ -5,11 +5,9 @@ import { PDFDownloadLink } from '@react-pdf/renderer';
 import PDFDocument from '../components/PdfDocument';
 
 function groupCartItems(cartItems) {
-  // Create an object to store the count of each product name
+  // Calculate the quantity map using the existing logic
   const countMap = {};
-
-  // Loop through the cart items and count the occurrences of each product name
-  cartItems.forEach((item) => {
+  cartItems.forEach(item => {
     const { id, name } = item;
     if (!countMap[name]) {
       countMap[name] = { ...item, quantity: 1 };
@@ -22,9 +20,9 @@ function groupCartItems(cartItems) {
   return Object.values(countMap);
 }
 
-const GeneratePDFLink = ({ cartItems }) => {
+const GeneratePDFLink = ({ cartItems, quantities }) => {
   const pdfData = (
-    <PDFDocument cartItems={cartItems} />
+    <PDFDocument cartItems={cartItems} quantities={quantities} />
   );
   const blob = new Blob([pdfData], { type: 'application/pdf' });
   const url = URL.createObjectURL(blob);
@@ -36,7 +34,7 @@ const GeneratePDFLink = ({ cartItems }) => {
       document={pdfData}
       fileName="cart.pdf"
     >
-      {({ blob, url, loading, error }) =>
+      {({ loading }) =>
         loading ? 'Loading document...' : 'Download PDF'
       }
     </PDFDownloadLink>
@@ -45,6 +43,7 @@ const GeneratePDFLink = ({ cartItems }) => {
 
 function Cart() {
   const cartItems = useSelector((state) => state.cart.cartItems);
+  const quantities = useSelector(state => state.cart.quantities);
   const groupedCartItems = groupCartItems(cartItems); // Group the cart items
 
   const dispatch = useDispatch();
@@ -69,10 +68,11 @@ function Cart() {
           <div className="cart-wrapper">
             {groupedCartItems.map((product) => (
               <div className="product-solo" key={product.id}>
-                <div>
-                  {product.name} {product.quantity > 1 && `x${product.quantity}`}
+                <div className="t-center">
+                  <div>{product.name}</div>
+                  <div>Quantidade: {quantities[product.id]}</div>
+                  <div className="d-flex t-center justify-center"><div>Preço:</div>{product.promoprice ? (<div className="promo-price">{product.promoprice}</div>) : <div>{product.price}</div>}</div>
                 </div>
-                {product.promoprice ? (<div className="promo-price">{product.promoprice}</div>) : <div>{product.price}</div>}
                 <button onClick={() => handleRemoveFromCart(product.id)}>Remove Item</button>
               </div>
             ))}

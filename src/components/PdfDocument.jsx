@@ -5,15 +5,16 @@ const styles = StyleSheet.create({
   section: { color: 'black', textAlign: 'center', margin: 30 }
 });
 
-const PDFDocument = ({ cartItems }) => (
+const PDFDocument = ({ cartItems, quantities }) => (
   <Document>
     <Page size="A4" style={styles.page}>
       <View style={styles.section}>
         <Text>Pedido</Text>
         {cartItems.map((product) => (
           <View key={product.id} style={styles.product}>
-            <Text>{product.name}</Text>
-            <Text>{product.promoprice ? product.promoprice : product.price}</Text>
+            <Text>Nome: {product.name}</Text>
+            <Text>Quantidade: {product.quantities}</Text>
+            <Text>Preço: {product.promoprice ? product.promoprice : product.price}</Text>
           </View>
         ))}
       </View>
