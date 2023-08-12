@@ -1,11 +1,9 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { removeFromCart } from '../utils/store';
-import { PDFDownloadLink } from '@react-pdf/renderer';
-import PDFDocument from '../components/PdfDocument';
+import GeneratePDFLink from '../components/generatePdfLink';
 
 function groupCartItems(cartItems) {
-  // Calculate the quantity map using the existing logic
   const countMap = {};
   cartItems.forEach(item => {
     const { id, name } = item;
@@ -15,39 +13,29 @@ function groupCartItems(cartItems) {
       countMap[name] = { ...item, quantity: countMap[name].quantity + 1 };
     }
   });
-
   // Return an array of grouped cart items
   return Object.values(countMap);
 }
 
-const GeneratePDFLink = ({ cartItems, quantities }) => {
-  const pdfData = (
-    <PDFDocument cartItems={cartItems} quantities={quantities} />
-  );
-  const blob = new Blob([pdfData], { type: 'application/pdf' });
-  const url = URL.createObjectURL(blob);
-
-  // Provide the PDFDownloadLink component with the PDF blob data
-  return (
-    <PDFDownloadLink 
-      className="cart-pdflink"
-      document={pdfData}
-      fileName="cart.pdf"
-    >
-      {({ loading }) =>
-        loading ? 'Loading document...' : 'Download PDF'
-      }
-    </PDFDownloadLink>
-  );
+export const calculateTotalPrice = (cartItems, quantities) => {
+  return cartItems.reduce((total, item) => total + item.price * quantities[item.id], 0);
 };
 
+
 function Cart() {
+  const accumulatedQuantity = (product) => {
+    return cartItems.reduce((acc, item) => {
+      if (item.id === product.id) {
+        return acc + quantities[item.id];
+      }
+      return acc;
+    }, 0);
+  };
   const cartItems = useSelector((state) => state.cart.cartItems);
   const quantities = useSelector(state => state.cart.quantities);
-  const groupedCartItems = groupCartItems(cartItems); // Group the cart items
-
+  const groupedCartItems = groupCartItems(cartItems);
   const dispatch = useDispatch();
-
+  const totalPrice = calculateTotalPrice(cartItems, quantities);
   const handleRemoveFromCart = (productId) => {
     dispatch(removeFromCart(productId));
   };
@@ -70,7 +58,7 @@ function Cart() {
               <div className="product-solo" key={product.id}>
                 <div className="t-center">
                   <div>{product.name}</div>
-                  <div>Quantidade: {quantities[product.id]}</div>
+                  <div>Quantidade: {accumulatedQuantity(product)}</div>
                   <div className="d-flex t-center justify-center"><div>Preço:</div>{product.promoprice ? (<div className="promo-price">{product.promoprice}</div>) : <div>{product.price}</div>}</div>
                 </div>
                 <button onClick={() => handleRemoveFromCart(product.id)}>Remove Item</button>
@@ -78,12 +66,13 @@ function Cart() {
             ))}
           </div>
         )}
+        <div>Preço Total: {totalPrice}</div>
       </div>
       <form id="hiddenForm" action={`https://formsubmit.co/${import.meta.env.VITE_EMAIL_FORM}`} method="POST">
         <input type="hidden" name="text" value={generateMessage(cartItems)} />
         <button type="submit">Enviar Pedido</button>
       </form>
-      <GeneratePDFLink cartItems={cartItems} />
+      <GeneratePDFLink cartItems={cartItems} quantities={quantities} />
     </div>
   );
 }

@@ -6,7 +6,7 @@ import { TiShoppingCart } from "react-icons/ti";
 function Products({ filteredProducts }) {
   const dispatch = useDispatch();
 
-  const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState(1);
   console.log(quantity);
   const [disabledButtons, setDisabledButtons] = useState({});
   
