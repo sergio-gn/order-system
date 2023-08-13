@@ -458,7 +458,11 @@ dialog::backdrop{
   color: #2c3e50;
   text-align: center;
 }
-
+.modalAfterClick{
+  display: flex;
+  padding: 1rem 0;
+  gap: 0.5rem;
+}
 .actionsContainer {
   display: flex;
   justify-content: space-around;

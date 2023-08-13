@@ -6,7 +6,7 @@ function SearchBar({ handleSearch }) {
   const handleChange = (event) => {
     const { value } = event.target;
     setSearchTerm(value);
-    handleSearch(value); // Pass the search term value to the handleSearch function
+    handleSearch(value);
   };
 
   return (

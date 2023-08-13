@@ -1,4 +1,3 @@
-import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { removeFromCart } from '../utils/store';
 import GeneratePDFLink from '../components/generatePdfLink';
@@ -6,7 +5,7 @@ import GeneratePDFLink from '../components/generatePdfLink';
 function groupCartItems(cartItems) {
   const countMap = {};
   cartItems.forEach(item => {
-    const { id, name } = item;
+    const { name } = item;
     if (!countMap[name]) {
       countMap[name] = { ...item, quantity: 1 };
     } else {
@@ -18,9 +17,11 @@ function groupCartItems(cartItems) {
 }
 
 export const calculateTotalPrice = (cartItems, quantities) => {
-  return cartItems.reduce((total, item) => total + item.price * quantities[item.id], 0);
+  return cartItems.reduce((total, item) => {
+    const itemPrice = item.promoprice || item.price;
+    return total + itemPrice * quantities[item.id]
+  }, 0).toFixed(2);;
 };
-
 
 function Cart() {
   const accumulatedQuantity = (product) => {

@@ -2,20 +2,26 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../utils/store";
 import { TiShoppingCart } from "react-icons/ti";
+import { Link } from 'react-router-dom';
 
 function Products({ filteredProducts }) {
   const dispatch = useDispatch();
 
   const [quantity, setQuantity] = useState(1);
-  console.log(quantity);
   const [disabledButtons, setDisabledButtons] = useState({});
-  
+  const [clickedProducts, setClickedProducts] = useState({});
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+
   const handleAddToCart = (product, quantity) => {
     dispatch(addToCart({ product, quantity }));
     setDisabledButtons((prev) => ({ ...prev, [product.id]: true }));
+        // Your addToCart logic here
+        setClickedProducts(prevClickedProducts => ({
+          ...prevClickedProducts,
+          [product.id]: true,
+        }));
   };  
-  const [isOpen, setIsOpen] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState(null);
   const openModal = (product) => {
     setIsOpen(true);
     setSelectedProduct(product);
@@ -105,16 +111,24 @@ function Products({ filteredProducts }) {
                 </div>
                 <div className="modalActions">
                   <div className="actionsContainer">
-                      <button
-                        className="cart_button"
-                        onClick={() => handleAddToCart(selectedProduct, quantity)}
-                        disabled={disabledButtons[selectedProduct.id]}
-                      >
-                        <TiShoppingCart />
-                        Adicionar
-                      </button>
+                    <button
+                      className="cart_button"
+                      onClick={() => handleAddToCart(selectedProduct, quantity)}
+                      disabled={disabledButtons[selectedProduct.id]}
+                    >
+                      <TiShoppingCart />
+                      Adicionar
+                    </button>
                   </div>
                 </div>
+                {clickedProducts[selectedProduct?.id]  ?
+                  <div className="modalAfterClick">
+                    <Link to="/cart">
+                      <button onClick={closeModal}>Ir Para o Carrinho</button>
+                    </Link>
+                    <button onClick={closeModal}>Continuar Comprando</button>
+                  </div>
+                : ""}
               </div>
             </div>
           </div>
