@@ -67,7 +67,7 @@ function Cart() {
             ))}
           </div>
         )}
-        <div>Preço Total: {totalPrice}</div>
+        <div className="t-center">Preço Total: {totalPrice}</div>
       </div>
       <form id="hiddenForm" action={`https://formsubmit.co/${import.meta.env.VITE_EMAIL_FORM}`} method="POST">
         <input type="hidden" name="text" value={generateMessage(cartItems)} />

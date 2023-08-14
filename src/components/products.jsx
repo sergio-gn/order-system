@@ -105,7 +105,14 @@ function Products({ filteredProducts }) {
                       placeholder="0"
                       type="number"
                       value={quantity}
-                      onChange={(e) => setQuantity(e.target.value)}
+                      onChange={(e) => {
+                        const inputQuantity = parseInt(e.target.value);
+                        if (!isNaN(inputQuantity) && inputQuantity > 0) {
+                          setQuantity(inputQuantity.toString());
+                        } else {
+                          setQuantity('');
+                        }
+                      }}
                     />
                   </div>
                 </div>
