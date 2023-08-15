@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getAuth } from "firebase/auth";
-import Profile from "../assets/profile.png";
+import Profile from "../../assets/profile.png";
 
 function Logged() {
   const [displayName, setDisplayName] = useState("");

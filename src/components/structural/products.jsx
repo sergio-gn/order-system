@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addToCart } from "../utils/store";
+import { addToCart } from "../../utils/store";
 import { TiShoppingCart } from "react-icons/ti";
 import { Link } from 'react-router-dom';
 

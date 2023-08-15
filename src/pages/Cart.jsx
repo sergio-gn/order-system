@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { removeFromCart } from '../utils/store';
-import GeneratePDFLink from '../components/generatePdfLink';
+import GeneratePDFLink from '../components/pdfFeature/generatePdfLink';
 
 function groupCartItems(cartItems) {
   const countMap = {};

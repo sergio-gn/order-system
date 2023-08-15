@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchProducts } from "../utils/store";
+import { fetchProducts } from "../../utils/store";
 import Products from "./products";
-import SearchBar from "./SearchBar";
+import SearchBar from "../ui/searchBar";
 import { TiZoomIn } from "react-icons/ti";
 
 function GetData({ addToCart }) {

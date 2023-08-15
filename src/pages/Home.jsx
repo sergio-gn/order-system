@@ -1,4 +1,4 @@
-import GetData from "../components/getData";
+import GetData from "../components/structural/getData";
 
 function Home(){
     return(

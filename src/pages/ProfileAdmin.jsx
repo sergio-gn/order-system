@@ -10,7 +10,7 @@ import {
 } from "firebase/firestore";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { storage } from "../utils/firebaseconfig";
-import EditButton from "../components/editButton";
+import EditButton from "../components/ui/editButton";
 
 function ProfileAdmin() {
   const productsCollectionRef = collection(db, "Products");
