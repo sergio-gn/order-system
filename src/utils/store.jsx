@@ -45,15 +45,25 @@ const cartSlice = createSlice({
   reducers: {
     addToCart: (state, action) => {
       const { product, quantity } = action.payload;
-      state.cartItems.push(product);
-      state.isButtonDisabled[product.id] = true;
-      state.quantities[product.id] = quantity; // Save the quantity
+      const productId = product.id;
+
+      const parsedQuantity = parseInt(quantity, 10);
+
+      // If the product is already in the cart, increment the quantity
+      if (state.quantities[productId]) {
+        state.quantities[productId] += parsedQuantity;
+      } else {
+        // If the product is new, set the quantity
+        state.quantities[productId] = parsedQuantity;
+        state.cartItems.push(product);
+        state.isButtonDisabled[productId] = true;
+      }
     },
     removeFromCart: (state, action) => {
       const productId = action.payload;
       state.cartItems = state.cartItems.filter((product) => product.id !== productId);
       state.isButtonDisabled[productId] = false;
-      delete state.quantities[productId]; // Remove quantity when removing from cart
+      delete state.quantities[productId];
     },
     updateQuantity: (state, action) => {
       const { productId, quantity } = action.payload;

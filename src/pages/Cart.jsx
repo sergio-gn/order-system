@@ -16,27 +16,31 @@ function groupCartItems(cartItems) {
   return Object.values(countMap);
 }
 
-export const calculateTotalPrice = (cartItems, quantities) => {
-  return cartItems.reduce((total, item) => {
+export const calculateTotalPriceAndQuantity = (cartItems, quantities) => {
+  const result = cartItems.reduce((accumulator, item) => {
     const itemPrice = item.promoprice || item.price;
-    return total + itemPrice * quantities[item.id]
-  }, 0).toFixed(2);;
+    const qtd = quantities[item.id];
+    const itemTotal = itemPrice * qtd;
+    
+    return {
+      total: accumulator.total + itemTotal,
+      quantity: accumulator.quantity + qtd
+    };
+  }, { total: 0, quantity: 0 });
+
+  return {
+    total: result.total.toFixed(2),
+    qtd: result.quantity
+  };
 };
 
 function Cart() {
-  const accumulatedQuantity = (product) => {
-    return cartItems.reduce((acc, item) => {
-      if (item.id === product.id) {
-        return acc + quantities[item.id];
-      }
-      return acc;
-    }, 0);
-  };
   const cartItems = useSelector((state) => state.cart.cartItems);
   const quantities = useSelector(state => state.cart.quantities);
+  const { total, qtd } = calculateTotalPriceAndQuantity(cartItems, quantities);
+  console.log(qtd);
   const groupedCartItems = groupCartItems(cartItems);
   const dispatch = useDispatch();
-  const totalPrice = calculateTotalPrice(cartItems, quantities);
   const handleRemoveFromCart = (productId) => {
     dispatch(removeFromCart(productId));
   };
@@ -59,7 +63,7 @@ function Cart() {
               <div className="product-solo" key={product.id}>
                 <div className="t-center">
                   <div>{product.name}</div>
-                  <div>Quantidade: {accumulatedQuantity(product)}</div>
+                  <div>Quantidade: {qtd} </div>
                   <div className="d-flex t-center justify-center"><div>Preço:</div>{product.promoprice ? (<div className="promo-price">{product.promoprice}</div>) : <div>{product.price}</div>}</div>
                 </div>
                 <button onClick={() => handleRemoveFromCart(product.id)}>Remove Item</button>
@@ -67,7 +71,7 @@ function Cart() {
             ))}
           </div>
         )}
-        <div className="t-center">Preço Total: {totalPrice}</div>
+        <div className="t-center">Preço Total: {total}</div>
       </div>
       <form id="hiddenForm" action={`https://formsubmit.co/${import.meta.env.VITE_EMAIL_FORM}`} method="POST">
         <input type="hidden" name="text" value={generateMessage(cartItems)} />
