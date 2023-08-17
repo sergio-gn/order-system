@@ -38,7 +38,6 @@ function Cart() {
   const cartItems = useSelector((state) => state.cart.cartItems);
   const quantities = useSelector(state => state.cart.quantities);
   const { total, qtd } = calculateTotalPriceAndQuantity(cartItems, quantities);
-  console.log(qtd);
   const groupedCartItems = groupCartItems(cartItems);
   const dispatch = useDispatch();
   const handleRemoveFromCart = (productId) => {
@@ -46,7 +45,7 @@ function Cart() {
   };
   const generateMessage = (cartItems) => {
     const message = cartItems.map(
-      (product) => `${product.name} - Price: ${product.promoprice ? product.promoprice : product.price} - Codigo: ${product.codigo}`
+      (product) => `${product.name} - Price: ${product.promoprice ? product.promoprice : product.price} - Qtd: ${qtd} Codigo: ${product.codigo}`
     );
     return message.join('\n');
   };
@@ -77,7 +76,7 @@ function Cart() {
         <input type="hidden" name="text" value={generateMessage(cartItems)} />
         <button type="submit">Enviar Pedido</button>
       </form>
-      <GeneratePDFLink cartItems={cartItems} quantities={quantities} />
+      <GeneratePDFLink qtd={qtd} cartItems={cartItems} />
     </div>
   );
 }

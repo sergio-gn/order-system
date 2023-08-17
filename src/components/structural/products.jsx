@@ -16,12 +16,11 @@ function Products({ filteredProducts }) {
   const handleAddToCart = (product, quantity) => {
     dispatch(addToCart({ product, quantity }));
     setDisabledButtons((prev) => ({ ...prev, [product.id]: true }));
-        // Your addToCart logic here
         setClickedProducts(prevClickedProducts => ({
           ...prevClickedProducts,
           [product.id]: true,
         }));
-  };  
+  };
   const openModal = (product) => {
     setIsOpen(true);
     setSelectedProduct(product);
@@ -81,6 +80,10 @@ function Products({ filteredProducts }) {
               Adicionar
             </button>
           ) : <button disabled>Indisponivel</button>}
+
+            <button className="go_to_product_button">
+              <Link to={`/product/${product.codigo}`}>Go to Product Page</Link>
+            </button>
         </div>
       ))}
       {isOpen && selectedProduct && (

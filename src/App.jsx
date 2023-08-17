@@ -11,6 +11,7 @@ import store from "./utils/store";
 import Profile from './pages/Profile';
 import Home from './pages/Home';
 import Cart from './pages/Cart';
+import SingleProduct from './pages/singleProduct';
 //components
 import CartLink from "./components/ui/cartLink";
 import Logged from './components/ui/logged';
@@ -71,6 +72,7 @@ function App() {
           <Route index path="/" element={<Home />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/product/:productId" element={<SingleProduct />} />
         </Routes>
       </Router>
     </Provider>
