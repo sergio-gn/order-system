@@ -1,9 +1,9 @@
-import GetData from "../components/structural/getData";
+import SearchAndSelect from '../components/structural/searchAndSelect'
 
 function Home(){
     return(
         <div>
-            <GetData/>
+            <SearchAndSelect/>
         </div>
     )
 }

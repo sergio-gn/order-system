@@ -5,7 +5,7 @@ import Products from "./products";
 import SearchBar from "../ui/searchBar";
 import { TiZoomIn } from "react-icons/ti";
 
-function GetData({ addToCart }) {
+function SearchAndSelect({ addToCart }) {
   const dispatch = useDispatch();
   const [selectedClassification, setSelectedClassification] = useState('');
   const [searchedProducts, setSearchedProducts] = useState([]);
@@ -96,4 +96,4 @@ function GetData({ addToCart }) {
   );
 }
 
-export default GetData;
+export default SearchAndSelect;
