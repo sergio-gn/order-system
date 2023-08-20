@@ -3,24 +3,18 @@ import { useDispatch } from "react-redux";
 import { addToCart } from "../../utils/store";
 import { TiShoppingCart } from "react-icons/ti";
 import { Link } from 'react-router-dom';
+import QuantityInput from '../ui/quantityInput';
+import AddToCartButton from "../ui/addToCartButton";
 
 function Products({ filteredProducts }) {
   const dispatch = useDispatch();
 
   const [quantity, setQuantity] = useState(1);
   const [disabledButtons, setDisabledButtons] = useState({});
-  const [clickedProducts, setClickedProducts] = useState({});
+  const [clickedCart, setClickedCart] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
 
-  const handleAddToCart = (product, quantity) => {
-    dispatch(addToCart({ product, quantity }));
-    setDisabledButtons((prev) => ({ ...prev, [product.id]: true }));
-        setClickedProducts(prevClickedProducts => ({
-          ...prevClickedProducts,
-          [product.id]: true,
-        }));
-  };
   const openModal = (product) => {
     setIsOpen(true);
     setSelectedProduct(product);
@@ -101,37 +95,21 @@ function Products({ filteredProducts }) {
                   </div>
                 </div>
                 <div className="modalContent">
-                  <div className="d-center justify-center gap-1">
-                    <span>Quantidade:</span>
-                    <input 
-                      className="input-quantity"
-                      placeholder="0"
-                      type="number"
-                      value={quantity}
-                      onChange={(e) => {
-                        const inputQuantity = parseInt(e.target.value);
-                        if (!isNaN(inputQuantity) && inputQuantity > 0) {
-                          setQuantity(inputQuantity.toString());
-                        } else {
-                          setQuantity('');
-                        }
-                      }}
-                    />
-                  </div>
+                  <QuantityInput
+                    quantity={quantity}
+                    onQuantityChange={(newQuantity) => setQuantity(newQuantity)}
+                  />
                 </div>
                 <div className="modalActions">
                   <div className="actionsContainer">
-                    <button
-                      className="cart_button"
-                      onClick={() => handleAddToCart(selectedProduct, quantity)}
-                      disabled={disabledButtons[selectedProduct.id]}
-                    >
-                      <TiShoppingCart />
-                      Adicionar
-                    </button>
+                    <AddToCartButton
+                      product={selectedProduct}
+                      quantity={quantity}
+                      onClick={() => setClickedCart(true)}
+                    />
                   </div>
                 </div>
-                {clickedProducts[selectedProduct?.id]  ?
+                {clickedCart  ?
                   <div className="modalAfterClick">
                     <Link to="/cart">
                       <button onClick={closeModal}>Ir Para o Carrinho</button>
@@ -141,7 +119,7 @@ function Products({ filteredProducts }) {
                 : ""}
               </div>
             </div>
-          </div>
+        </div>
       )}
     </div>
   );
