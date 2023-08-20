@@ -76,6 +76,9 @@
 .justify-center{
   justify-content: center;
 }
+.flex-direction-column{
+  flex-direction: column;
+}
 .small-title {
   font-size: 1.2rem;
   font-weight: bolder;
@@ -529,4 +532,8 @@ dialog::backdrop{
   box-shadow: none;
   transform: none;
   background: whitesmoke;
+}
+/**************************** singleProduct ****************************/
+.card-singleProduct{
+  flex-direction: column;
 }

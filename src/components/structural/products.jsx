@@ -51,7 +51,7 @@ function Products({ filteredProducts }) {
             {product.name}
           </div>
           <div className="small-font">
-            Cod: {product.codigo}
+            Cod: {product.code}
           </div>
           <div className="d-center">
             {product.indisponivel === undefined || product.indisponivel === false ? (
@@ -82,7 +82,7 @@ function Products({ filteredProducts }) {
           ) : <button disabled>Indisponivel</button>}
 
             <button className="go_to_product_button">
-              <Link to={`/product/${product.codigo}`}>Go to Product Page</Link>
+              <Link to={`/product/${product.code}`}>Go to Product Page</Link>
             </button>
         </div>
       ))}
@@ -97,7 +97,7 @@ function Products({ filteredProducts }) {
                 <div className="modalHeader">
                   <div className="heading">
                     {selectedProduct.name} <br></br>
-                    {selectedProduct.codigo}
+                    {selectedProduct.code}
                   </div>
                 </div>
                 <div className="modalContent">

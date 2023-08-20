@@ -17,7 +17,7 @@ function ProfileAdmin() {
   const [products, setProducts] = useState([]);
   const [newProduct, setNewProduct] = useState({
     classification: "",
-    codigo: "",
+    code: "",
     name: "",
     price: 0,
     promo: false,
@@ -25,6 +25,7 @@ function ProfileAdmin() {
     productMetric: "",
     indisponivel: false,
     photoUrl: "",
+    description: ""
   });
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
@@ -37,46 +38,26 @@ function ProfileAdmin() {
   
   const createProduct = async () => {
     try {
-      // Check if an image is being uploaded
-      if (uploading) {
-        setMessages("Por favor Aguarde, fazendo Upload da Imagem...");
+      // Check if required fields are filled out
+      if (
+        !newProduct.classification ||
+        !newProduct.code ||
+        !newProduct.name ||
+        !newProduct.description ||
+        !newProduct.price ||
+        (!newProduct.promo && !newProduct.promoprice) ||
+        !newProduct.productMetric
+      ) {
+        setMessages("Por favor, preencha todos os campos obrigatórios.");
         return;
       }
   
-      // Upload the photo to Firebase Storage
-      if (selectedFile) {
-        setUploading(true); // Set uploading state to true
-        setMessages("Por favor Aguarde, fazendo Upload da Imagem...");
+      // Rest of your code for handling image upload and creating the product
   
-        const storageRef = ref(storage, `productImages/${selectedFile.name}`);
-        const uploadTask = uploadBytesResumable(storageRef, selectedFile);
-  
-        try {
-          const snapshot = await uploadTask;
-          const photoUrl = await getDownloadURL(snapshot.ref);
-          setMessages("Upload da Imagem realizado com Sucesso");
-          console.log("Photo URL:", photoUrl);
-  
-          // Update the newProduct state with the photoUrl
-          setNewProduct({ ...newProduct, photoUrl });
-  
-          // Create the product in the Firestore database after the photoUrl is set
-          await addDoc(productsCollectionRef, { ...newProduct, photoUrl });
-  
-          setUploading(false); // Set uploading state to false after successful upload
-        } catch (error) {
-          setMessages("Erro ao fazer upload da foto", error);
-          setUploading(false); // Set uploading state to false in case of an error
-        }
-      } else {
-        // If no photo is selected, create the product without the photoUrl
-        await addDoc(productsCollectionRef, newProduct);
-      }
-      
       setMessages("Produto Criado com Sucesso");
       setNewProduct({
         classification: "",
-        codigo: "",
+        code: "",
         name: "",
         price: 0,
         promo: false,
@@ -84,6 +65,7 @@ function ProfileAdmin() {
         productMetric: "",
         indisponivel: false,
         photoUrl: "",
+        description: ""
       });
     } catch (error) {
       setMessages("Erro ao criar produto:", error);
@@ -91,8 +73,6 @@ function ProfileAdmin() {
   };
   
   
-  
-
   const deleteProduct = async (id) => {
     const productDoc = doc(db, "Products", id);
     await deleteDoc(productDoc);
@@ -140,9 +120,9 @@ function ProfileAdmin() {
       const searchTermLower = searchTerm.toLowerCase();
       const filteredProducts = products.filter((product) => {
         const nameMatch = product.name && product.name.toLowerCase().includes(searchTermLower);
-        const codigoMatch = product.codigo && product.codigo.toLowerCase().includes(searchTermLower);
+        const codeMatch = product.code && product.code.toLowerCase().includes(searchTermLower);
 
-        return nameMatch || codigoMatch;
+        return nameMatch || codeMatch;
       });
 
       setSearchedProducts(filteredProducts);
@@ -162,66 +142,73 @@ function ProfileAdmin() {
   return (
     <div className="App">
       <div className="createProduct-dad profile-card">
-        <div className="createProduct">
-          <input
-            placeholder="Categoria..."
-            value={newProduct.classification}
-            onChange={(event) =>
-              setNewProduct({ ...newProduct, classification: event.target.value })
-            }
-          />
-          <input
-            placeholder="Codigo..."
-            value={newProduct.codigo}
-            onChange={(event) =>
-              setNewProduct({ ...newProduct, codigo: event.target.value })
-            }
-          />
-          <input
-            placeholder="Nome..."
-            value={newProduct.name}
-            onChange={(event) =>
-              setNewProduct({ ...newProduct, name: event.target.value })
-            }
-          />
-          <input
-            placeholder="Preco..."
-            value={newProduct.price}
-            onChange={(event) =>
-              setNewProduct({ ...newProduct, price: event.target.value })
-            }
-          />
-          <input
-            placeholder="Promocional..."
-            value={newProduct.promoprice}
-            onChange={(event) =>
-              setNewProduct({ ...newProduct, promoprice: event.target.value })
-            }
-          />
-          <input
-            placeholder="Un, Cx, Duzia..."
-            value={newProduct.productMetric}
-            onChange={(event) =>
-              setNewProduct({ ...newProduct, productMetric: event.target.value })
-            }
-          />
-          <div className="d-flex">
-            Indisponivel:
+          <div className="createProduct">
             <input
-              type="checkbox"
-              checked={newProduct.indisponivel}
-              onChange={handleIndisponivelChange}
+              placeholder="Categoria..."
+              value={newProduct.classification}
+              onChange={(event) =>
+                setNewProduct({ ...newProduct, classification: event.target.value })
+              }
             />
+            <input
+              placeholder="Código..."
+              value={newProduct.code}
+              onChange={(event) =>
+                setNewProduct({ ...newProduct, code: event.target.value })
+              }
+              />
+            <input
+              placeholder="Nome..."
+              value={newProduct.name}
+              onChange={(event) =>
+                setNewProduct({ ...newProduct, name: event.target.value })
+              }
+              />
+            <textarea
+              placeholder="Descrição..."
+              value={newProduct.description}
+              onChange={(event) =>
+                setNewProduct({ ...newProduct, description: event.target.value })
+              }
+              />
+            <input
+              placeholder="Preco..."
+              value={newProduct.price}
+              onChange={(event) =>
+                setNewProduct({ ...newProduct, price: event.target.value })
+              }
+              />
+            <input
+              placeholder="Promocional..."
+              value={newProduct.promoprice}
+              onChange={(event) =>
+                setNewProduct({ ...newProduct, promoprice: event.target.value })
+              }
+              />
+            <input
+              placeholder="Un, Cx, Duzia..."
+              value={newProduct.productMetric}
+              onChange={(event) =>
+                setNewProduct({ ...newProduct, productMetric: event.target.value })
+              }
+              />
+            <div className="d-flex">
+              Indisponivel:
+              <input
+                type="checkbox"
+                checked={newProduct.indisponivel}
+                onChange={handleIndisponivelChange}
+              />
+            </div>
+            <input type="file" onChange={(event) => handleFileUpload(event)} />
           </div>
-          <input type="file" onChange={(event) => handleFileUpload(event)} />
-        </div>
-        <EditButton buttonText={"Criar Produto"} onClick={createProduct}/>
-        {messages}
+          <EditButton buttonText={"Criar Produto"} onClick={createProduct}/>
+          {messages}
       </div>
       <div className="profile-edit-product gap-1">
         <input
           className="searchBar-full"
-          placeholder="Buscar pelo nome ou codigo..."
+          placeholder="Buscar pelo nome ou code..."
           value={searchTerm}
           onChange={(event) => handleSearch(event.target.value)}
         />
@@ -230,7 +217,7 @@ function ProfileAdmin() {
             return (
               <div className="productCardAdmin" key={product.id}>
                 <p>Produto: {product.name}</p>
-                <p>Codigo: {product.codigo}</p>
+                <p>code: {product.code}</p>
                 <div className="gap-05 d-flex">
                   <EditButton buttonText={"Deletar Produto"} onClick={() => deleteProduct(product.id)}/>
                   <button onClick={() => handleSelectProduct(product)}>Editar Produto</button>
@@ -244,7 +231,7 @@ function ProfileAdmin() {
             <p>Editar Produto:</p>
               <div className="editProduct-dad profile-card">
                 <input
-                  placeholder="Classification..."
+                  placeholder="Classificação..."
                   value={selectedProduct.classification}
                   onChange={(event) =>
                     setSelectedProduct({
@@ -252,19 +239,19 @@ function ProfileAdmin() {
                       classification: event.target.value,
                     })
                   }
-                />
+                  />
                 <input
-                  placeholder="Codigo..."
-                  value={selectedProduct.codigo}
+                  placeholder="Código..."
+                  value={selectedProduct.code}
                   onChange={(event) =>
                     setSelectedProduct({
                       ...selectedProduct,
-                      codigo: event.target.value,
+                      code: event.target.value,
                     })
                   }
-                />
+                  />
                 <input
-                  placeholder="Name..."
+                  placeholder="Nome..."
                   value={selectedProduct.name}
                   onChange={(event) =>
                     setSelectedProduct({
@@ -272,9 +259,20 @@ function ProfileAdmin() {
                       name: event.target.value,
                     })
                   }
-                />
+                  />
                 <input
-                  placeholder="Price..."
+                  type="textarea"
+                  placeholder="Descrição..."
+                  value={selectedProduct.description}
+                  onChange={(event) =>
+                    setSelectedProduct({
+                      ...selectedProduct,
+                      description: event.target.value,
+                    })
+                  }
+                  />
+                <input
+                  placeholder="Preço..."
                   value={selectedProduct.price}
                   onChange={(event) =>
                     setSelectedProduct({
@@ -282,7 +280,7 @@ function ProfileAdmin() {
                       price: event.target.value,
                     })
                   }
-                />
+                  />
                 <input
                   placeholder="Un, Cx..."
                   value={selectedProduct.productMetric}
@@ -292,7 +290,7 @@ function ProfileAdmin() {
                       productMetric: event.target.value,
                     })
                   }
-                />
+                  />
                 <div className="d-flex">
                   <input
                   placeholder="Novo preco promocional"
@@ -303,7 +301,7 @@ function ProfileAdmin() {
                       promoprice: event.target.value,
                     })
                   }
-                />
+                  />
                 <div className="d-flex">
                   Indisponivel:
                   <input

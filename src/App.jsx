@@ -72,7 +72,7 @@ function App() {
           <Route index path="/" element={<Home />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/product/:productId" element={<SingleProduct />} />
+          <Route path="/product/:productCode" element={<SingleProduct />} />
         </Routes>
       </Router>
     </Provider>
