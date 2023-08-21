@@ -1,23 +1,28 @@
-import {React, useState} from 'react';
-import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
+import { fetchProducts } from "../utils/store";
 import QuantityInput from '../components/ui/quantityInput';
 import AddToCartButton from '../components/ui/addToCartButton';
 
 function SingleProduct() {
   const { productCode } = useParams();
+  const dispatch = useDispatch();
+  const products = useSelector((state) => state.products.products);
   const [quantity, setQuantity] = useState(1);
-  const products = useSelector(state => state.products.products);
-  const product = products.find(product => product.code === productCode);
   const [clickedCart, setClickedCart] = useState(false);
+  useEffect(() => {
+    // Fetch products if not already fetched
+    if (products.length === 0) {
+      dispatch(fetchProducts());
+    }
+  }, [dispatch, products]);
 
-  if (!product) {
-    return <div>Loading...</div>;
-  }
+  const product = products.find((product) => product.code === productCode);
 
   return (
     <div className="container">
+      {product ? (
       <div className="card-singleProduct">
         <div className="d-center justify-center">
           <div className="image-product-wrapper">
@@ -50,6 +55,9 @@ function SingleProduct() {
           : ""}
         </div>
       </div>
+      ) : (
+        <p>Loading...</p>
+      )}
     </div>
   );
 }

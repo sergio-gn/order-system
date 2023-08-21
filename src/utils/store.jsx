@@ -40,7 +40,7 @@ const cartSlice = createSlice({
   initialState: {
     cartItems: [],
     isButtonDisabled: {},
-    quantities: {}, // Add this property to track quantities
+    quantities: {},
   },
   reducers: {
     addToCart: (state, action) => {
