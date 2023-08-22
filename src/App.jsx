@@ -75,6 +75,11 @@ function App() {
           <Route path="/product/:productCode" element={<SingleProduct />} />
         </Routes>
       </Router>
+      <div className="footer">
+        <div className="logo">
+          <img src={Logo} alt="Logo" />
+        </div>
+      </div>
     </Provider>
   );
 }

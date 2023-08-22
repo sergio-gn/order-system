@@ -537,3 +537,9 @@ dialog::backdrop{
 .card-singleProduct{
   flex-direction: column;
 }
+
+/************ footer *****************/
+.footer{
+  background: #5172E9;
+  padding: 5rem;
+}

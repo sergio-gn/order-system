@@ -26,9 +26,10 @@ function Products({ filteredProducts }) {
     document.body.style.overflow = 'auto';
     document.documentElement.style.overflow = 'auto';
   };
+  const maxProductCount = 4;
   return (
     <div className="products">
-      {filteredProducts.map((product) => (
+      {filteredProducts.slice(0, maxProductCount).map((product) => (
         <div className="product-solo" key={product.id}>
           {product.price && product.promoprice ? (
             <div className="promo-badge">

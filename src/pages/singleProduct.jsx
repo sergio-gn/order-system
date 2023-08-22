@@ -6,18 +6,22 @@ import QuantityInput from '../components/ui/quantityInput';
 import AddToCartButton from '../components/ui/addToCartButton';
 
 function SingleProduct() {
+  // url 
   const { productCode } = useParams();
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products.products);
+  //components states
   const [quantity, setQuantity] = useState(1);
   const [clickedCart, setClickedCart] = useState(false);
+
   useEffect(() => {
-    // Fetch products if not already fetched
+    // Fetch products using fetchProducts function from REdux if not already fetched
     if (products.length === 0) {
       dispatch(fetchProducts());
     }
   }, [dispatch, products]);
 
+  // Find products based on the productCode
   const product = products.find((product) => product.code === productCode);
 
   return (
