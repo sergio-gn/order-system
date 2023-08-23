@@ -13,6 +13,8 @@ function Products({ filteredProducts }) {
   const [clickedCart, setClickedCart] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const productsPerPage = 4;
 
   const openModal = (product) => {
     setIsOpen(true);
@@ -26,10 +28,13 @@ function Products({ filteredProducts }) {
     document.body.style.overflow = 'auto';
     document.documentElement.style.overflow = 'auto';
   };
-  const maxProductCount = 4;
+
+  const startIndex = (currentPage - 1) * productsPerPage;
+  const endIndex = startIndex + productsPerPage;
+
   return (
     <div className="products">
-      {filteredProducts.slice(0, maxProductCount).map((product) => (
+      {filteredProducts.slice(startIndex, endIndex).map((product) => (
         <div className="product-solo" key={product.id}>
           {product.price && product.promoprice ? (
             <div className="promo-badge">
@@ -80,6 +85,17 @@ function Products({ filteredProducts }) {
             </button>
         </div>
       ))}
+      <div>
+        {Array.from({ length: Math.ceil(filteredProducts.length / productsPerPage) }, (_, index) => (
+          <button
+            key={index + 1}
+            onClick={() => setCurrentPage(index + 1)}
+            disabled={currentPage === index + 1}
+          >
+            {index + 1}
+          </button>
+        ))}
+      </div>
       {isOpen && selectedProduct && (
         <div>
           <div className="darkBG" onClick={closeModal} />
