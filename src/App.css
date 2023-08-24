@@ -1,3 +1,10 @@
+@import url("https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&display=swap");
+body {
+  font-family: "Lexend", sans-serif;
+  line-height: 1.5;
+  min-height: 100vh;
+  color: #393232;
+}
 .container {
   padding-right: 20px;
   padding-left: 20px;
@@ -283,7 +290,6 @@ dialog::backdrop{
   text-align: left;
   padding: 1rem 1.25rem 1rem 1.25rem;
   border-radius: 0rem 0.7rem 0.7rem 0;
-  font-family: system-ui;
   width: 11rem;
 }
 .card-list{
@@ -300,7 +306,6 @@ dialog::backdrop{
   padding: 0;
   margin: 0;
   line-height: 1;
-  font-family: 'Poppins-Medium';
 }
 .read-the-docs {
   color: #888;
@@ -536,7 +541,16 @@ dialog::backdrop{
 /**************************** singleProduct ****************************/
 .card-singleProduct{
   flex-direction: column;
+  background-color: #FFF;
+	box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05), 0 20px 50px 0 rgba(0, 0, 0, 0.1);
+	border-radius: 15px;
+  margin: 5rem 0;
 }
+.singleProduct-actions{
+  margin-top: 1.25rem;
+  border-top: 1px solid #ddd;
+}
+
 
 /************ footer *****************/
 .footer{
