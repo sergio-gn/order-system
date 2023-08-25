@@ -28,16 +28,16 @@ function SingleProduct() {
     <div className="container">
       {product ? (
       <div className="card-singleProduct">
-        <div className="d-center flex-direction-column">
+        <div className="card-singleProduct-child flex-direction-column">
           <div className="d-flex justify-center">
-            <div className="">
+            <div>
               <div className="image-product-wrapper">
                 {product.photoUrl && <img className="product-photo" src={product.photoUrl} alt={product.name} />}
               </div>
+            </div>
+            <div>
               <h2>{product.name}</h2>
               <p>{product.code}</p>
-            </div>
-            <div className="">
               <p>{product.price}</p>
               <p>{product.description}</p>
             </div>

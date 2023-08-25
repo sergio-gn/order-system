@@ -234,6 +234,10 @@ nav ul {
 .cart_button:hover{
   background: rgb(0, 121, 0);
 }
+.go_to_product_button{
+  margin: 0.5rem 0;
+  padding: 0.5rem 1rem;
+}
 .promo-badge {
   background: darkgreen;
   top: -1rem;
@@ -549,6 +553,13 @@ dialog::backdrop{
 .singleProduct-actions{
   margin-top: 1.25rem;
   border-top: 1px solid #ddd;
+  padding: 1rem;
+}
+.singleProduct-actions button{
+  margin: 1rem auto;
+}
+.card-singleProduct-child{
+  gap: 3rem;
 }
 
 

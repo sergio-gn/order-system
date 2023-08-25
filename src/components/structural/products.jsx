@@ -81,7 +81,7 @@ function Products({ filteredProducts }) {
           ) : <button disabled>Indisponivel</button>}
 
             <button className="go_to_product_button">
-              <Link to={`/product/${product.code}`}>Go to Product Page</Link>
+              <Link to={`/product/${product.code}`}>Detalhes</Link>
             </button>
         </div>
       ))}
