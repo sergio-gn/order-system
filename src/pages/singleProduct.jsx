@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { fetchProducts } from "../utils/store";
 import QuantityInput from '../components/ui/quantityInput';
 import AddToCartButton from '../components/ui/addToCartButton';

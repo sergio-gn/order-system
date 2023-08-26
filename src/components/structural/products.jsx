@@ -27,67 +27,71 @@ function Products({ filteredProducts }) {
     setSelectedProduct(null);
     document.body.style.overflow = 'auto';
     document.documentElement.style.overflow = 'auto';
+    setClickedCart(false);
   };
 
   const startIndex = (currentPage - 1) * productsPerPage;
   const endIndex = startIndex + productsPerPage;
 
   return (
-    <div className="products">
-      {filteredProducts.slice(startIndex, endIndex).map((product) => (
-        <div className="product-solo" key={product.id}>
-          {product.price && product.promoprice ? (
-            <div className="promo-badge">
-              {Math.floor(((parseFloat(product.price) - parseFloat(product.promoprice)) / parseFloat(product.price)) * 100)}%
-            </div>
-          ) : (
-            ""
-          )}
-          <div className="image-product-wrapper">
-            {product.photoUrl && <img className="product-photo" src={product.photoUrl} alt={product.name} />}
-          </div>
-          <div className="product-name medium-font bold t-center">
-            {product.name}
-          </div>
-          <div className="small-font">
-            Cod: {product.code}
-          </div>
-          <div className="d-center">
-            {product.indisponivel === undefined || product.indisponivel === false ? (
-              <div>
-                {product.price !== undefined && (
-                  <>
-                    <div className={`bold medium-font ${product.promoprice ? "unactive-price" : ""}`}>
-                      R$: {product.price} {product.productMetric}
-                    </div>
-                      {product.promoprice && (
-                        <div className="t-center">
-                          <p className="medium-font promo-price bold">       
-                            R$: {product.promoprice !== 0 ? product.promoprice : ''} {product.productMetric}
-                          </p>
-                        </div>
-                      )}
-                  </>
-                )}
+    <div>
+      <div className="products">
+        {filteredProducts.slice(startIndex, endIndex).map((product) => (
+          <div className="product-solo" key={product.id}>
+            {product.price && product.promoprice ? (
+              <div className="promo-badge">
+                {Math.floor(((parseFloat(product.price) - parseFloat(product.promoprice)) / parseFloat(product.price)) * 100)}%
               </div>
-            ) : "Indisponivel"}
+            ) : (
+              ""
+            )}
+            <div className="image-product-wrapper">
+              {product.photoUrl && <img className="product-photo" src={product.photoUrl} alt={product.name} />}
+            </div>
+            <div className="product-name medium-font bold t-center">
+              {product.name}
+            </div>
+            <div className="small-font">
+              Cod: {product.code}
+            </div>
+            <div className="d-center">
+              {product.indisponivel === undefined || product.indisponivel === false ? (
+                <div>
+                  {product.price !== undefined && (
+                    <>
+                      <div className={`bold medium-font ${product.promoprice ? "unactive-price" : ""}`}>
+                        R$: {product.price} {product.productMetric}
+                      </div>
+                        {product.promoprice && (
+                          <div className="t-center">
+                            <p className="medium-font promo-price bold">       
+                              R$: {product.promoprice !== 0 ? product.promoprice : ''} {product.productMetric}
+                            </p>
+                          </div>
+                        )}
+                    </>
+                  )}
+                </div>
+              ) : "Indisponivel"}
+            </div>
+
+            {product.indisponivel === false ? (
+              <button className="cart_button" onClick={() => openModal(product)}>
+                <TiShoppingCart />
+                Adicionar
+              </button>
+            ) : <button disabled>Indisponivel</button>}
+
+              <button className="go_to_product_button">
+                <Link to={`/product/${product.code}`}>Detalhes</Link>
+              </button>
           </div>
-
-          {product.indisponivel === false ? (
-            <button className="cart_button" onClick={() => openModal(product)}>
-              <TiShoppingCart />
-              Adicionar
-            </button>
-          ) : <button disabled>Indisponivel</button>}
-
-            <button className="go_to_product_button">
-              <Link to={`/product/${product.code}`}>Detalhes</Link>
-            </button>
-        </div>
-      ))}
-      <div>
+        ))}
+      </div>
+      <div className="page-counter">
         {Array.from({ length: Math.ceil(filteredProducts.length / productsPerPage) }, (_, index) => (
-          <button
+          <button 
+            className="page-counter_button"
             key={index + 1}
             onClick={() => setCurrentPage(index + 1)}
             disabled={currentPage === index + 1}

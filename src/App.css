@@ -179,13 +179,33 @@ nav ul {
 /************ end categories ****************/
 
 /*********** cart ***************************/
-.cart-container{
-  display: flex;
-  align-items: center;
-  color: #000;
+.cart{
+  padding: 2rem 0;
+}
+.cart-card{
+  display:flex;
   flex-direction: column;
   gap: 1rem;
-  margin: 1rem;
+  background-color: #FFF;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05), 0 20px 50px 0 rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  padding: 1rem;
+}
+.cart-product{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  border-top: 1px solid #e8e8e8;
+  padding: 1rem 0;
+}
+.total-price{
+  border-top: 1px solid #e8e8e8;
+}
+.remove{
+  padding: .25rem 0;
+}
+.submit-button{
+  padding: .5rem 1rem;
+  margin: 1rem 0;
 }
 .cart-pdflink{
   color: blue;
@@ -354,11 +374,6 @@ dialog::backdrop{
   grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 1rem;
 }
-.cart-wrapper{
-  display:flex;
-  flex-direction: column;
-  gap: 1rem;
-}
 .profile-card{
   background: #fff;
   border-radius: 0.5rem;
@@ -379,11 +394,17 @@ dialog::backdrop{
   width: 40rem;
   margin: auto;
 }
-
 .createProduct{
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0.5rem;
+}
+.page-counter{
+  margin: .5rem 0;
+}
+.page-counter_button{
+  padding: 1rem;
+  margin: 0 0.25rem;
 }
 /******responsive************/
 @media (max-width:1100px){

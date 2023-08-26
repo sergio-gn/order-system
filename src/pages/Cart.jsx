@@ -50,31 +50,30 @@ function Cart() {
     return message.join('\n');
   };
   return (
-    <div className="container cart-container">
-      <h1>Cart Page</h1>
+    <div className="container cart">
       <div>
-        <h2>Your Cart</h2>
-        {groupedCartItems.length === 0 ? (
-          <p>Your cart is empty.</p>
-        ) : (
-          <div className="cart-wrapper">
-            {groupedCartItems.map((product) => (
-              <div className="product-solo" key={product.id}>
-                <div className="t-center">
+        <h2>Carrinho</h2>
+        <div className="cart-card">
+          {groupedCartItems.length === 0 ? (
+            <p>Seu carrinho está vazio.</p>
+          ) : (
+            <>
+              {groupedCartItems.map((product) => (
+                <div className="cart-product" key={product.id}>
                   <div>{product.name}</div>
                   <div>Quantidade: {qtd} </div>
                   <div className="d-flex t-center justify-center"><div>Preço:</div>{product.promoprice ? (<div className="promo-price">{product.promoprice}</div>) : <div>{product.price}</div>}</div>
+                  <button className="remove" onClick={() => handleRemoveFromCart(product.id)}>Remover</button>
                 </div>
-                <button onClick={() => handleRemoveFromCart(product.id)}>Remove Item</button>
-              </div>
-            ))}
-          </div>
-        )}
-        <div className="t-center">Preço Total: {total}</div>
+              ))}
+            </>
+          )}
+          <div className="total-price t-center">Preço Total: {total}</div>
+        </div>
       </div>
       <form id="hiddenForm" action={`https://formsubmit.co/${import.meta.env.VITE_EMAIL_FORM}`} method="POST">
         <input type="hidden" name="text" value={generateMessage(cartItems)} />
-        <button type="submit">Enviar Pedido</button>
+        <button className="submit-button" type="submit">Enviar Pedido</button>
       </form>
       <GeneratePDFLink qtd={qtd} cartItems={cartItems} />
     </div>
