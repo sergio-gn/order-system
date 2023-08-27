@@ -9,7 +9,6 @@ function Products({ filteredProducts }) {
   const dispatch = useDispatch();
 
   const [quantity, setQuantity] = useState(1);
-  const [disabledButtons, setDisabledButtons] = useState({});
   const [clickedCart, setClickedCart] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -28,6 +27,7 @@ function Products({ filteredProducts }) {
     document.body.style.overflow = 'auto';
     document.documentElement.style.overflow = 'auto';
     setClickedCart(false);
+    setQuantity(1);
   };
 
   const startIndex = (currentPage - 1) * productsPerPage;

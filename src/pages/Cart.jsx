@@ -2,14 +2,14 @@ import { useSelector, useDispatch } from "react-redux";
 import { removeFromCart } from '../utils/store';
 import GeneratePDFLink from '../components/pdfFeature/generatePdfLink';
 
-function groupCartItems(cartItems) {
+function groupCartItems(cartItems, quantities) {
   const countMap = {};
   cartItems.forEach(item => {
-    const { name } = item;
-    if (!countMap[name]) {
-      countMap[name] = { ...item, quantity: 1 };
+    const { id, name } = item;
+    if (!countMap[id]) {
+      countMap[id] = { ...item, quantity: quantities[id] || 0 }; // Use stored quantity
     } else {
-      countMap[name] = { ...item, quantity: countMap[name].quantity + 1 };
+      countMap[id] = { ...item, quantity: countMap[id].quantity + (quantities[id] || 0) };
     }
   });
   // Return an array of grouped cart items
@@ -38,7 +38,7 @@ function Cart() {
   const cartItems = useSelector((state) => state.cart.cartItems);
   const quantities = useSelector(state => state.cart.quantities);
   const { total, qtd } = calculateTotalPriceAndQuantity(cartItems, quantities);
-  const groupedCartItems = groupCartItems(cartItems);
+  const groupedCartItems = groupCartItems(cartItems, quantities);
   const dispatch = useDispatch();
   const handleRemoveFromCart = (productId) => {
     dispatch(removeFromCart(productId));
@@ -61,7 +61,7 @@ function Cart() {
               {groupedCartItems.map((product) => (
                 <div className="cart-product" key={product.id}>
                   <div>{product.name}</div>
-                  <div>Quantidade: {qtd} </div>
+                  <div>Quantidade: {product.quantity} </div>
                   <div className="d-flex t-center justify-center"><div>Preço:</div>{product.promoprice ? (<div className="promo-price">{product.promoprice}</div>) : <div>{product.price}</div>}</div>
                   <button className="remove" onClick={() => handleRemoveFromCart(product.id)}>Remover</button>
                 </div>
