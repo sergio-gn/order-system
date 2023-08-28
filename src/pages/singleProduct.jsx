@@ -27,41 +27,43 @@ function SingleProduct() {
   return (
     <div className="container">
       {product ? (
-      <div className="card-singleProduct">
-        <div className="card-singleProduct-child flex-direction-column">
+      <div>
+        <div>
           <div className="d-flex justify-center">
-            <div>
-              <div className="image-product-wrapper">
-                {product.photoUrl && <img className="product-photo" src={product.photoUrl} alt={product.name} />}
+            <div className="card-singleProduct">
+              <div className="d-flex">
+                <div className="image-product-wrapper">
+                  {product.photoUrl && <img className="product-photo" src={product.photoUrl} alt={product.name} />}
+                </div>
+                <div>
+                  <h2>{product.name}</h2>
+                  <p>{product.code}</p>
+                  <p>{product.price}</p>
+                  <p>{product.description}</p>
+                </div>
+              </div>
+              <div className="singleProduct-actions">
+                <QuantityInput
+                  quantity={quantity}
+                  onQuantityChange={(newQuantity) => setQuantity(newQuantity)}
+                />
+                <AddToCartButton
+                  product={product}
+                  quantity={quantity}
+                  onClick={() => setClickedCart(true)}
+                />
+                {clickedCart  ?
+                  <div className="modalAfterClick">
+                    <Link to="/cart">
+                      <button >Ir Para o Carrinho</button>
+                    </Link>
+                    <Link to="/">
+                      <button >Continuar Comprando</button>
+                    </Link>
+                  </div>
+                : ""}
               </div>
             </div>
-            <div>
-              <h2>{product.name}</h2>
-              <p>{product.code}</p>
-              <p>{product.price}</p>
-              <p>{product.description}</p>
-            </div>
-          </div>
-          <div className="singleProduct-actions">
-            <QuantityInput
-              quantity={quantity}
-              onQuantityChange={(newQuantity) => setQuantity(newQuantity)}
-            />
-            <AddToCartButton
-              product={product}
-              quantity={quantity}
-              onClick={() => setClickedCart(true)}
-            />
-            {clickedCart  ?
-              <div className="modalAfterClick">
-                <Link to="/cart">
-                  <button >Ir Para o Carrinho</button>
-                </Link>
-                <Link to="/">
-                  <button >Continuar Comprando</button>
-                </Link>
-              </div>
-            : ""}
           </div>
         </div>
       </div>

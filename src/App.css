@@ -579,10 +579,6 @@ dialog::backdrop{
 .singleProduct-actions button{
   margin: 1rem auto;
 }
-.card-singleProduct-child{
-  gap: 3rem;
-}
-
 
 /************ footer *****************/
 .footer{
