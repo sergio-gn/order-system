@@ -1,38 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { removeFromCart } from '../utils/store';
 import GeneratePDFLink from '../components/pdfFeature/generatePdfLink';
-
-function groupCartItems(cartItems, quantities) {
-  const countMap = {};
-  cartItems.forEach(item => {
-    const { id, name } = item;
-    if (!countMap[id]) {
-      countMap[id] = { ...item, quantity: quantities[id] || 0 }; // Use stored quantity
-    } else {
-      countMap[id] = { ...item, quantity: countMap[id].quantity + (quantities[id] || 0) };
-    }
-  });
-  // Return an array of grouped cart items
-  return Object.values(countMap);
-}
-
-export const calculateTotalPriceAndQuantity = (cartItems, quantities) => {
-  const result = cartItems.reduce((accumulator, item) => {
-    const itemPrice = item.promoprice || item.price;
-    const qtd = quantities[item.id];
-    const itemTotal = itemPrice * qtd;
-    
-    return {
-      total: accumulator.total + itemTotal,
-      quantity: accumulator.quantity + qtd
-    };
-  }, { total: 0, quantity: 0 });
-
-  return {
-    total: result.total.toFixed(2),
-    qtd: result.quantity
-  };
-};
+import { groupCartItems, calculateTotalPriceAndQuantity, generateMessage } from '../utils/usefulFunctions';
 
 function Cart() {
   const cartItems = useSelector((state) => state.cart.cartItems);
@@ -40,17 +9,9 @@ function Cart() {
   const { total, qtd } = calculateTotalPriceAndQuantity(cartItems, quantities);
   const groupedCartItems = groupCartItems(cartItems, quantities);
   const dispatch = useDispatch();
-  const handleRemoveFromCart = (productId) => {
-    dispatch(removeFromCart(productId));
-  };
-  const generateMessage = (cartItems) => {
-    const message = cartItems.map(
-      (product) => `${product.name} - Price: ${product.promoprice ? product.promoprice : product.price} - Qtd: ${qtd} Codigo: ${product.codigo}`
-    );
-    return message.join('\n');
-  };
+  const handleRemoveFromCart = (productId) => {dispatch(removeFromCart(productId));};
   return (
-    <div className="container cart">
+    <div className="container cart main-content">
       <div>
         <h2>Carrinho</h2>
         <div className="cart-card">
@@ -75,7 +36,7 @@ function Cart() {
         <input type="hidden" name="text" value={generateMessage(cartItems)} />
         <button className="submit-button" type="submit">Enviar Pedido</button>
       </form>
-      <GeneratePDFLink qtd={qtd} cartItems={cartItems} />
+      <GeneratePDFLink groupedCartItems={groupedCartItems} />
     </div>
   );
 }

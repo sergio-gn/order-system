@@ -5,6 +5,9 @@ body {
   min-height: 100vh;
   color: #393232;
 }
+.main-content{
+  min-height: 100vh;
+}
 .container {
   padding-right: 20px;
   padding-left: 20px;
@@ -180,7 +183,7 @@ nav ul {
 
 /*********** cart ***************************/
 .cart{
-  padding: 2rem 0;
+  padding: 2rem;
 }
 .cart-card{
   display:flex;

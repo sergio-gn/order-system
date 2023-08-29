@@ -25,7 +25,7 @@ function SingleProduct() {
   const product = products.find((product) => product.code === productCode);
 
   return (
-    <div className="container">
+    <div className="container main-content">
       {product ? (
       <div>
         <div>

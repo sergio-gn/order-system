@@ -6,19 +6,19 @@ const styles = StyleSheet.create({
   section: { color: 'black', textAlign: 'center', margin: 30 },
   table: { display: 'table', width: '100%', borderStyle: 'solid', borderWidth: 1, borderColor: 'black' },
   tableRow: { flexDirection: 'row' },
-  tableCell: { margin: 5, padding: 5, flexGrow: 1, borderColor: 'black', borderWidth: 1 },
+  tableCell: { margin: 5, padding: 5, flexGrow: 1, borderWidth: 1 },
 });
 
-const PDFDocument = ({ cartItems, qtd }) => (
+const PDFDocument = ({ groupedCartItems }) => (
   <Document>
     <Page size="A4" style={styles.page}>
       <View style={styles.section}>
         <Text>Pedido</Text>
         <View style={styles.table}>
-          {cartItems.map((product) => (
+          {groupedCartItems.map((product) => (
             <View key={product.id} style={styles.tableRow}>
               <Text style={styles.tableCell}>{product.name}</Text>
-              <Text style={styles.tableCell}>{qtd}</Text>
+              <Text style={styles.tableCell}>{product.quantity}</Text>
               <Text style={styles.tableCell}>{product.promoprice ? product.promoprice : product.price}</Text>
             </View>
           ))}

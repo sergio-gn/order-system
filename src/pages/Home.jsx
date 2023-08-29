@@ -2,7 +2,7 @@ import SearchAndSelect from '../components/structural/searchAndSelect'
 
 function Home(){
     return(
-        <div>
+        <div className="main-content">
             <SearchAndSelect/>
         </div>
     )

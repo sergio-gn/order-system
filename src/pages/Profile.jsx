@@ -74,7 +74,7 @@ function Profile() {
   };
 
   return (
-    <div className="container">
+    <div className="container main-content">
       <div className="profile-container">
         <div className="t-center">
           <p>Name: {name}</p>
