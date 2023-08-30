@@ -1,9 +1,9 @@
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import  PDFDocument  from './pdfDocument';
 
-const GeneratePDFLink = ({groupedCartItems}) => {
+const GeneratePDFLink = ({groupedCartItems, calculateTotal}) => {
     const pdfData = (
-      <PDFDocument groupedCartItems={groupedCartItems} />
+      <PDFDocument groupedCartItems={groupedCartItems} calculateTotal={calculateTotal} />
     );
     const blob = new Blob([pdfData], { type: 'application/pdf' });
     const url = URL.createObjectURL(blob);

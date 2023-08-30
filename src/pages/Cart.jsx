@@ -6,7 +6,7 @@ import { groupCartItems, calculateTotalPriceAndQuantity, generateMessage } from 
 function Cart() {
   const cartItems = useSelector((state) => state.cart.cartItems);
   const quantities = useSelector(state => state.cart.quantities);
-  const { total, qtd } = calculateTotalPriceAndQuantity(cartItems, quantities);
+  const { total: calculateTotal } = calculateTotalPriceAndQuantity(cartItems, quantities);
   const groupedCartItems = groupCartItems(cartItems, quantities);
   const dispatch = useDispatch();
   const handleRemoveFromCart = (productId) => {dispatch(removeFromCart(productId));};
@@ -22,21 +22,21 @@ function Cart() {
               {groupedCartItems.map((product) => (
                 <div className="cart-product" key={product.id}>
                   <div>{product.name}</div>
-                  <div>Quantidade: {product.quantity} </div>
+                  <div>Quantidade: {product.quantity} {product.productMetric} </div>
                   <div className="d-flex t-center justify-center"><div>Preço:</div>{product.promoprice ? (<div className="promo-price">{product.promoprice}</div>) : <div>{product.price}</div>}</div>
                   <button className="remove" onClick={() => handleRemoveFromCart(product.id)}>Remover</button>
                 </div>
               ))}
             </>
           )}
-          <div className="total-price t-center">Preço Total: {total}</div>
+          <div className="total-price t-center">Preço Total: {calculateTotal}</div>
         </div>
       </div>
       <form id="hiddenForm" action={`https://formsubmit.co/${import.meta.env.VITE_EMAIL_FORM}`} method="POST">
         <input type="hidden" name="text" value={generateMessage(cartItems)} />
         <button className="submit-button" type="submit">Enviar Pedido</button>
       </form>
-      <GeneratePDFLink groupedCartItems={groupedCartItems} />
+      <GeneratePDFLink groupedCartItems={groupedCartItems} calculateTotal={calculateTotal} />
     </div>
   );
 }
