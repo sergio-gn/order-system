@@ -81,5 +81,5 @@ const store = configureStore({
 });
 
 export const { setProducts } = productsSlice.actions;
-export const { addToCart, removeFromCart } = cartSlice.actions;
+export const { addToCart, removeFromCart, updateQuantity } = cartSlice.actions;
 export default store;

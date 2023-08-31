@@ -8,7 +8,6 @@ function AddToCartButton({ product, quantity, disabled, onClick }) {
 
   const handleAddToCart = () => {
     dispatch(addToCart({ product, quantity }));
-    // You can add the disabled and clickedProducts logic here if needed
   };
   const handleButtonClick = () => {
     handleAddToCart();
