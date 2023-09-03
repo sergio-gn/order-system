@@ -32,10 +32,9 @@ function ProfileAdmin() {
   const [searchedProducts, setSearchedProducts] = useState([]);
   const [selectedProductIndisponivel, setSelectedProductIndisponivel] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
-  const [uploading, setUploading] = useState(false); 
+  const [uploadProgress, setUploadProgress] = useState("");
   const [messages, setMessages] = useState("");
 
-  
   const createProduct = async () => {
     try {
       // Check if required fields are filled out
@@ -52,7 +51,35 @@ function ProfileAdmin() {
         return;
       }
   
-      // Rest of your code for handling image upload and creating the product
+      // Upload the selected file (image) to Firebase Storage
+      if (selectedFile) {
+        const storageRef = ref(storage, `product_images/${selectedFile.name}`);
+        const uploadTask = uploadBytesResumable(storageRef, selectedFile);
+  
+        uploadTask.on("state_changed", (snapshot) => {
+          setUploadProgress("Carregando Produto");
+        });
+  
+        await uploadTask;
+        const downloadURL = await getDownloadURL(storageRef);
+  
+        // Store the image URL in the new product data
+        newProduct.photoUrl = downloadURL;
+      }
+  
+      // Create a new document in the "Products" collection
+      const docRef = await addDoc(productsCollectionRef, {
+        classification: newProduct.classification,
+        code: newProduct.code,
+        name: newProduct.name,
+        description: newProduct.description,
+        price: newProduct.price,
+        promo: newProduct.promo,
+        promoprice: newProduct.promoprice,
+        productMetric: newProduct.productMetric,
+        indisponivel: newProduct.indisponivel,
+        photoUrl: newProduct.photoUrl, // Store the image URL here
+      });
   
       setMessages("Produto Criado com Sucesso");
       setNewProduct({
@@ -67,17 +94,16 @@ function ProfileAdmin() {
         photoUrl: "",
         description: ""
       });
+  
+      console.log("Product ID:", docRef.id);
     } catch (error) {
       setMessages("Erro ao criar produto:", error);
     }
   };
-  
-  
   const deleteProduct = async (id) => {
     const productDoc = doc(db, "Products", id);
     await deleteDoc(productDoc);
   };
-  
   const handleSelectProduct = (product) => {
     setSelectedProduct(product);
     setSelectedProductIndisponivel(product.indisponivel);
@@ -203,6 +229,11 @@ function ProfileAdmin() {
             <input type="file" onChange={(event) => handleFileUpload(event)} />
           </div>
           <EditButton buttonText={"Criar Produto"} onClick={createProduct}/>
+          {uploadProgress && (
+            <div>
+              {uploadProgress}
+            </div>
+          )}
           {messages}
       </div>
       <div className="profile-edit-product gap-1">

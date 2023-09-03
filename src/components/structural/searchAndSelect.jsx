@@ -82,7 +82,7 @@ function SearchAndSelect({ addToCart }) {
           <div className="child-categories">
             <p className="small-title">Categorias</p>
             <div className="categoriesButtons">
-              <button onClick={handleShowAllClassifications}>Show All</button>
+              <button onClick={handleShowAllClassifications}>Mostrar Todas</button>
               {classifications.map((classification, index) => (
                   <button key={index} onClick={() => handleClassificationClick(classification)}>
                     {classification}

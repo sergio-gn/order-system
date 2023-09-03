@@ -90,6 +90,7 @@ body {
   flex-direction: column;
 }
 .small-title {
+  padding: 0 0 1rem 0;
   font-size: 1.2rem;
   font-weight: bolder;
   margin: 0;
@@ -361,7 +362,7 @@ dialog::backdrop{
 }
 .child-categories{
   box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 5px 0px;
-  padding: 2rem;
+  padding: 1rem;
   background: #fff;
   border-radius: 1rem;
 }
