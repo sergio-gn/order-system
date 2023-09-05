@@ -1,18 +1,22 @@
 import React, { useState } from "react";
 
-function EditButton({buttonText, onClick}) {
+function EditButton({ buttonText, onClick }) {
   const [isEditing, setIsEditing] = useState(false);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
   const handleClick = () => {
-    setIsEditing((prevIsEditing) => !prevIsEditing);
-    onClick();
+    if (!isButtonDisabled) {
+      setIsEditing((prevIsEditing) => !prevIsEditing);
+      onClick();
+      setIsButtonDisabled(true); // Disable the button after clicking
+    }
   };
 
   return (
     <button
       className={`edit-btn ${isEditing ? "edit-btn-green" : ""}`}
-      // className="edit-btn"
       onClick={handleClick}
+      disabled={isButtonDisabled} // Disable the button when isButtonDisabled is true
     >
       {isEditing ? "Ok" : `${buttonText}`}
     </button>
