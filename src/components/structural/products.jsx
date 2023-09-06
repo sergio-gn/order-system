@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { TiShoppingCart } from "react-icons/ti";
+import { TiShoppingCart, TiArrowBack } from "react-icons/ti";
 import { Link } from 'react-router-dom';
 import QuantityInput from '../ui/quantityInput';
 import AddToCartButton from "../ui/addToCartButton";
@@ -132,9 +132,13 @@ function Products({ filteredProducts }) {
                 {clickedCart  ?
                   <div className="modalAfterClick">
                     <Link to="/cart">
-                      <button onClick={closeModal}>Ir Para o Carrinho</button>
+                      <button className="go-to_cart" onClick={closeModal}>
+                        Ir para o carrinho <TiShoppingCart />
+                      </button>
                     </Link>
-                    <button onClick={closeModal}>Continuar Comprando</button>
+                    <button className="keep_buying" onClick={closeModal}>
+                      Continuar comprando <TiArrowBack />
+                    </button>
                   </div>
                 : ""}
               </div>

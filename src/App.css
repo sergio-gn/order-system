@@ -258,6 +258,24 @@ nav ul {
 .cart_button:hover{
   background: rgb(0, 121, 0);
 }
+.go-to_cart{
+  border: 2px solid #5172E9;
+  color: #ffffff;
+  background-color: #5172E9;
+}
+.go-to_cart:hover{
+  border: 2px solid #5172E9;
+  background-color: #3956be;
+}
+.keep_buying{
+  border: 2px solid #5172E9;
+  color: #5172E9;
+  background-color: #ffffff;
+}
+.keep_buying:hover{
+  border: 2px solid #3956be;
+  color: #3956be;
+}
 .go_to_product_button{
   margin: 0.5rem 0;
   padding: 0.5rem 1rem;
@@ -465,7 +483,7 @@ dialog::backdrop{
 
 .modal {
   padding: 1rem;
-  width: 250px;
+  width: 350px;
   background: white;
   color: white;
   z-index: 10;
